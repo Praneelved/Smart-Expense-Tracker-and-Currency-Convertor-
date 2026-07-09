@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SDG Goals - Smart Expense Tracker</title>
+  <meta name="description" content="Learn how Smart Expense Tracker aligns with UN Sustainable Development Goals 8 and 12.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f7fb;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
+    }
+    .top-nav {
+      background: #1a56db;
+      padding: 12px 0;
+    }
+    .top-nav .brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .top-nav .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-left: 28px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .top-nav .nav-links a:hover,
+    .top-nav .nav-links a.active {
+      color: #ffd43b;
+    }
+    .page-title {
+      margin-top: 36px;
+      margin-bottom: 28px;
+    }
+    .page-title h1 {
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: #0d3b66;
+    }
+    .page-title p {
+      color: #6c757d;
+      font-size: 0.95rem;
+    }
+    .white-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      padding: 32px 28px;
+      border: 1px solid rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+
+    /* SDG Cards */
+    .sdg-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.04);
+      overflow: hidden;
+      margin-bottom: 28px;
+      transition: transform 0.25s ease;
+    }
+    .sdg-card:hover {
+      transform: translateY(-4px);
+    }
+    .sdg-header {
+      padding: 24px 28px;
+      color: #fff;
+    }
+    .sdg-header h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+    .sdg-header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+    .sdg-body {
+      padding: 24px 28px;
+    }
+    .sdg-body h5 {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    .sdg-body ul {
+      padding-left: 18px;
+    }
+    .sdg-body li {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .sdg8-bg { background: #a21942; }
+    .sdg12-bg { background: #bf8b2e; }
+
+    /* Connection Card */
+    .connect-card {
+      background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .connect-card h4 {
+      font-weight: 700;
+      color: #1b5e20;
+      margin-bottom: 16px;
+      font-size: 1.15rem;
+    }
+    .connect-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .connect-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .connect-text h6 {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    .connect-text p {
+      font-size: 0.82rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .site-footer {
+      background: #212529;
+      color: rgba(255,255,255,0.7);
+      padding: 18px 0;
+      margin-top: 56px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 767px) {
+      .top-nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="top-nav">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="brand" href="index.html">💰 Smart Expense Tracker</a>
+      <div class="nav-links d-none d-md-block">
+        <a href="index.html">Home</a>
+        <a href="expense.html">Expense Tracker</a>
+        <a href="currency.html">Currency Converter</a>
+        <a href="sdg.html" class="active">SDG</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Title -->
+  <div class="container page-title">
+    <h1>🌍 Sustainable Development Goals</h1>
+    <p>How this project supports the United Nations SDG framework for a better future.</p>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <!-- SDG 8 -->
+      <div class="col-lg-6">
+        <div class="sdg-card">
+          <div class="sdg-header sdg8-bg">
+            <h3>SDG 8: Decent Work & Economic Growth</h3>
+            <p>Promote sustained, inclusive economic growth and productive employment</p>
+          </div>
+          <div class="sdg-body">
+            <h5>How Our Project Contributes:</h5>
+            <ul>
+              <li><strong>Financial Literacy</strong> — By tracking income and expenses, users develop better understanding of personal finance management.</li>
+              <li><strong>Budget Planning</strong> — Encourages users to plan their spending, leading to better economic decisions at individual level.</li>
+              <li><strong>Income Tracking</strong> — Helps users monitor their salary and earnings, promoting awareness of economic participation.</li>
+              <li><strong>Currency Awareness</strong> — Understanding exchange rates helps in global economic participation and trade awareness.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SDG 12 -->
+      <div class="col-lg-6">
+        <div class="sdg-card">
+          <div class="sdg-header sdg12-bg">
+            <h3>SDG 12: Responsible Consumption</h3>
+            <p>Ensure sustainable consumption and production patterns</p>
+          </div>
+          <div class="sdg-body">
+            <h5>How Our Project Contributes:</h5>
+            <ul>
+              <li><strong>Spending Awareness</strong> — Category-wise tracking makes users conscious of where their money goes, reducing impulsive spending.</li>
+              <li><strong>Consumption Patterns</strong> — Visual breakdown of expenses helps identify areas of over-consumption.</li>
+              <li><strong>Waste Reduction</strong> — When users see how much they spend on non-essentials, they tend to make more sustainable choices.</li>
+              <li><strong>Mindful Spending</strong> — The remaining balance feature encourages users to think before every purchase.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Connection to Project -->
+    <div class="connect-card mt-2">
+      <h4>🔗 How This Project Connects to SDGs</h4>
+
+      <div class="connect-item">
+        <div class="connect-icon" style="background:#e8f5e9;">📊</div>
+        <div class="connect-text">
+          <h6>Expense Tracking → Responsible Consumption (SDG 12)</h6>
+          <p>When users categorize expenses into Food, Shopping, Travelling etc., they become aware of their consumption patterns. This awareness is the first step toward responsible spending.</p>
+        </div>
+      </div>
+
+      <div class="connect-item">
+        <div class="connect-icon" style="background:#fff3e0;">💼</div>
+        <div class="connect-text">
+          <h6>Salary Management → Economic Growth (SDG 8)</h6>
+          <p>By setting monthly salary and tracking remaining balance, users learn to manage their earnings effectively — a key skill for economic growth at individual level.</p>
+        </div>
+      </div>
+
+      <div class="connect-item">
+        <div class="connect-icon" style="background:#e3f2fd;">💱</div>
+        <div class="connect-text">
+          <h6>Currency Converter → Global Economic Awareness (SDG 8)</h6>
+          <p>Understanding how currencies relate to each other promotes awareness of international trade, global markets, and economic interdependence.</p>
+        </div>
+      </div>
+
+      <div class="connect-item">
+        <div class="connect-icon" style="background:#fce4ec;">🎯</div>
+        <div class="connect-text">
+          <h6>Category Analysis → Waste Reduction (SDG 12)</h6>
+          <p>The category-wise summary with percentage bars helps users visualize spending distribution, encouraging them to cut unnecessary expenses and reduce financial waste.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SDG Overview -->
+    <div class="white-card mt-4">
+      <h5 style="font-weight:600; color:#222; margin-bottom:14px;">📝 What are Sustainable Development Goals?</h5>
+      <p style="font-size:0.92rem; color:#555; line-height:1.7;">
+        The Sustainable Development Goals (SDGs) are a set of <strong>17 global goals</strong> adopted by the United Nations in 2015 as part of the 2030 Agenda for Sustainable Development. They provide a shared blueprint for peace and prosperity for people and the planet. Each goal addresses specific global challenges including poverty, inequality, climate change, environmental degradation, and access to justice and education.
+      </p>
+      <p style="font-size:0.92rem; color:#555; line-height:1.7;">
+        Our project specifically focuses on <strong>SDG 8</strong> (Decent Work and Economic Growth) and <strong>SDG 12</strong> (Responsible Consumption and Production), as financial awareness and responsible spending are directly connected to these goals.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer text-center">
+    &copy; 2026 Smart Expense Tracker & Currency Converter. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
