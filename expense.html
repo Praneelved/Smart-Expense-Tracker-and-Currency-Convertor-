@@ -302,15 +302,19 @@
           <h5>➕ Add New Expense</h5>
           <form id="expenseForm">
             <div class="row g-3">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="expDesc" class="form-label">Description</label>
                 <input type="text" class="form-control" id="expDesc" placeholder="e.g. Lunch" required>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label for="expAmount" class="form-label">Amount (₹)</label>
                 <input type="number" class="form-control" id="expAmount" placeholder="e.g. 250" min="1" required>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
+                <label for="expDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="expDate" required>
+              </div>
+              <div class="col-md-2">
                 <label for="expCategory" class="form-label">Category</label>
                 <select class="form-select" id="expCategory" required>
                   <option value="">Select...</option>
@@ -359,25 +363,19 @@
           </div>
         </div>
 
-        <!-- Category-wise Pie Chart -->
+        <!-- Category-wise Percentage Chart -->
         <div class="white-card">
-          <h5>🎨 Category Chart</h5>
-          <canvas id="categoryChart" height="220"></canvas>
+          <h5>📊 Spending by Category (%)</h5>
+          <canvas id="categoryChart" height="240"></canvas>
           <p id="catChartEmpty" style="color:#999; font-size:0.85rem; text-align:center;">Add expenses to see chart</p>
         </div>
 
-        <!-- Daily Spending Chart -->
+        <!-- Date-wise Spending Table -->
         <div class="white-card">
-          <h5>📅 Daily Spending</h5>
-          <canvas id="dailyChart" height="200"></canvas>
-          <p id="dailyEmpty" style="color:#999; font-size:0.85rem; text-align:center;">Add expenses to see daily chart</p>
-        </div>
-
-        <!-- Monthly Spending Chart -->
-        <div class="white-card">
-          <h5>📆 Monthly Spending</h5>
-          <canvas id="monthlyChart" height="200"></canvas>
-          <p id="monthlyEmpty" style="color:#999; font-size:0.85rem; text-align:center;">Add expenses to see monthly chart</p>
+          <h5>📅 Spending by Date</h5>
+          <div id="dateWiseSpending" style="max-height: 300px; overflow-y: auto;">
+            <p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>
+          </div>
         </div>
 
       </div>
@@ -390,6 +388,10 @@
         <div class="white-card">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0">📝 Spending Report</h5>
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-primary rounded-pill px-3" id="downloadPdfBtn" style="display:none;"><i class="bi bi-file-pdf"></i> 📄 PDF</button>
+              <button type="button" class="btn btn-outline-success rounded-pill px-3" id="downloadCsvBtn" style="display:none;"><i class="bi bi-file-earmark-spreadsheet"></i> 📊 CSV</button>
+            </div>
           </div>
           <div id="reportSection">
             <p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to generate your spending report</p>
@@ -431,11 +433,14 @@
     const expenseForm = document.getElementById('expenseForm');
     const expDesc = document.getElementById('expDesc');
     const expAmount = document.getElementById('expAmount');
+    const expDate = document.getElementById('expDate');
     const expCategory = document.getElementById('expCategory');
     const displaySalary = document.getElementById('displaySalary');
     const displayExpenses = document.getElementById('displayExpenses');
     const displayBalance = document.getElementById('displayBalance');
     const expenseTableWrap = document.getElementById('expenseTableWrap');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
     const emptyState = document.getElementById('emptyState');
     const clearAllBtn = document.getElementById('clearAllBtn');
     const categorySummary = document.getElementById('categorySummary');
@@ -537,6 +542,7 @@
           <thead>
             <tr>
               <th>#</th>
+              <th>Date</th>
               <th>Description</th>
               <th>Category</th>
               <th>Amount</th>
@@ -549,13 +555,14 @@
       // [JS Array: forEach] Loop through each expense in the array
       expenses.forEach((expense, index) => {
         // [ES6: Destructuring] Extracting properties from the object
-        const { description, amount, category } = expense;
+        const { description, amount, category, date } = expense;
         const bgColor = categoryColors[category] || '#546e7a';
 
         // [ES6: Template Literal] Embedding variables inside strings
         tableHTML += `
           <tr>
             <td>${index + 1}</td>
+            <td>${date || 'N/A'}</td>
             <td>${description}</td>
             <td><span class="badge-category" style="background:${bgColor}15; color:${bgColor};">${category}</span></td>
             <td style="font-weight:600; color:#c62828;">₹${amount.toLocaleString()}</td>
@@ -639,6 +646,15 @@
 
 
     // ================================================================
+    // [Event: DOMContentLoaded] Set default date to today
+    // ================================================================
+    function setDefaultDate() {
+      const today = new Date().toISOString().split('T')[0];
+      expDate.value = today;
+      expDate.max = today; // Prevent future dates
+    }
+
+    // ================================================================
     // [addEventListener: submit] Add expense form handler
     // ================================================================
     expenseForm.addEventListener('submit', (e) => {
@@ -648,9 +664,10 @@
       const description = expDesc.value.trim();
       const amount = parseFloat(expAmount.value);
       const category = expCategory.value;
+      const date = expDate.value;
 
       // [Conditional] Validation
-      if (!description || isNaN(amount) || amount <= 0 || !category) {
+      if (!description || isNaN(amount) || amount <= 0 || !category || !date) {
         alert('Please fill all fields correctly.');
         return;
       }
@@ -660,17 +677,20 @@
         description: description,
         amount: amount,
         category: category,
-        date: new Date().toISOString().split('T')[0] // Store as YYYY-MM-DD
+        date: date // Store as YYYY-MM-DD
       });
 
       saveData();              // [localStorage] Save updated array
       updateSummary();         // [DOM] Recalculate totals
       renderExpenses();        // [DOM] Re-render the table
       renderCategorySummary(); // [DOM] Update category bars
-      renderCharts();          // [Chart.js] Update spending graphs
+      renderCategoryChart();   // [Chart.js] Update category chart
+      renderDateWiseSpending();// [DOM] Update date breakdown
+      renderReport();          // [DOM] Update report
 
       // [DOM] Reset form fields
       expenseForm.reset();
+      setDefaultDate(); // Reset date to today
     });
 
 
@@ -685,8 +705,8 @@
       updateSummary();
       renderExpenses();
       renderCategorySummary();
-      renderCharts();
       renderCategoryChart();
+      renderDateWiseSpending();
       renderReport();
     }
 
@@ -706,82 +726,69 @@
 
 
     // ================================================================
-    // [Chart.js] Render daily and monthly spending bar charts
+    // [DOM] Render date-wise spending breakdown
     // ================================================================
-    // Chart.js uses <canvas> element to draw charts
-    // We use reduce() to group expenses by date/month
-    let dailyChartObj = null;
-    let monthlyChartObj = null;
-
-    function renderCharts() {
-      const dailyCanvas = document.getElementById('dailyChart');
-      const monthlyCanvas = document.getElementById('monthlyChart');
-      const dailyEmpty = document.getElementById('dailyEmpty');
-      const monthlyEmpty = document.getElementById('monthlyEmpty');
+    function renderDateWiseSpending() {
+      const container = document.getElementById('dateWiseSpending');
 
       if (expenses.length === 0) {
-        dailyEmpty.style.display = 'block';
-        monthlyEmpty.style.display = 'block';
-        dailyCanvas.style.display = 'none';
-        monthlyCanvas.style.display = 'none';
-        if (dailyChartObj) { dailyChartObj.destroy(); dailyChartObj = null; }
-        if (monthlyChartObj) { monthlyChartObj.destroy(); monthlyChartObj = null; }
+        container.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>';
         return;
       }
 
-      dailyEmpty.style.display = 'none';
-      monthlyEmpty.style.display = 'none';
-      dailyCanvas.style.display = 'block';
-      monthlyCanvas.style.display = 'block';
-
       // [Array: reduce] Group expenses by date
-      const dailyTotals = expenses.reduce((acc, exp) => {
-        const day = exp.date || 'Unknown';
-        acc[day] = (acc[day] || 0) + exp.amount;
+      const dateMap = expenses.reduce((acc, exp) => {
+        const date = exp.date || 'Unknown';
+        if (!acc[date]) {
+          acc[date] = [];
+        }
+        acc[date].push(exp);
         return acc;
       }, {});
 
-      // [Array: reduce] Group expenses by month (YYYY-MM)
-      const monthlyTotals = expenses.reduce((acc, exp) => {
-        const month = exp.date ? exp.date.substring(0, 7) : 'Unknown';
-        acc[month] = (acc[month] || 0) + exp.amount;
-        return acc;
-      }, {});
+      // [Object.keys + sort] Sort dates in descending order (latest first)
+      const sortedDates = Object.keys(dateMap).sort().reverse();
 
-      // [Object.keys + Object.values] Get labels and data for charts
-      const dailyLabels = Object.keys(dailyTotals).slice(-7); // Last 7 days
-      const dailyData = dailyLabels.map(d => dailyTotals[d]);
-      const monthLabels = Object.keys(monthlyTotals).slice(-6); // Last 6 months
-      const monthData = monthLabels.map(m => monthlyTotals[m]);
+      let html = '<div>';
+      sortedDates.forEach(date => {
+        const dayExpenses = dateMap[date];
+        const dayTotal = dayExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+        
+        // Format date to readable format
+        const dateObj = new Date(date + 'T00:00:00');
+        const dateStr = dateObj.toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
 
-      // Destroy old charts before creating new ones
-      if (dailyChartObj) dailyChartObj.destroy();
-      if (monthlyChartObj) monthlyChartObj.destroy();
+        html += `
+          <div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #333; font-size: 0.95rem;">${dateStr}</strong>
+              <span style="font-weight: 600; color: #c62828; font-size: 0.95rem;">₹${dayTotal.toLocaleString()}</span>
+            </div>
+            <div style="margin-left: 8px;">
+        `;
 
-      // [Chart.js] Create daily bar chart
-      dailyChartObj = new Chart(dailyCanvas, {
-        type: 'bar',
-        data: {
-          labels: dailyLabels,
-          datasets: [{ label: 'Spent (₹)', data: dailyData, backgroundColor: '#ef5350', borderRadius: 6 }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        dayExpenses.forEach(exp => {
+          const color = categoryColors[exp.category] || '#546e7a';
+          html += `
+            <div style="font-size: 0.85rem; padding: 4px 0; display: flex; justify-content: space-between;">
+              <span style="color: #666;">
+                <span style="color: ${color}; font-weight: 500;">${exp.category}</span> - ${exp.description}
+              </span>
+              <span style="color: #999;">₹${exp.amount.toLocaleString()}</span>
+            </div>
+          `;
+        });
+
+        html += '</div></div>';
       });
+      html += '</div>';
 
-      // [Chart.js] Create monthly bar chart
-      monthlyChartObj = new Chart(monthlyCanvas, {
-        type: 'bar',
-        data: {
-          labels: monthLabels,
-          datasets: [{ label: 'Spent (₹)', data: monthData, backgroundColor: '#1a56db', borderRadius: 6 }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-      });
+      container.innerHTML = html;
     }
 
 
     // ================================================================
-    // [Chart.js] Category-wise doughnut chart with different colors
+    // [Chart.js] Render category-wise spending with percentages
     // ================================================================
     let catChartObj = null;
 
@@ -807,21 +814,52 @@
 
       const labels = Object.keys(totals);
       const data = Object.values(totals);
+      const totalExp = getTotalExpenses();
+      
+      // [Array: map] Create labels with percentages
+      const labelsWithPercent = labels.map(label => {
+        const percentage = ((totals[label] / totalExp) * 100).toFixed(1);
+        return `${label} (${percentage}%)`;
+      });
+
       // [Array: map] Map each category to its color
       const colors = labels.map(cat => categoryColors[cat] || '#546e7a');
 
       if (catChartObj) catChartObj.destroy();
 
-      // [Chart.js] Doughnut chart — each slice = one category
+      // [Chart.js] Pie chart — each slice = one category with percentage
       catChartObj = new Chart(canvas, {
-        type: 'doughnut',
+        type: 'pie',
         data: {
-          labels: labels,
-          datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }]
+          labels: labelsWithPercent,
+          datasets: [{ 
+            data: data, 
+            backgroundColor: colors, 
+            borderWidth: 2, 
+            borderColor: '#fff',
+            hoverOffset: 10
+          }]
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } }
+          plugins: { 
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                padding: 15, 
+                font: { size: 12, weight: '500' },
+                usePointStyle: true
+              } 
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const percentage = ((context.parsed / totalExp) * 100).toFixed(1);
+                  return `₹${context.parsed.toLocaleString()} (${percentage}%)`;
+                }
+              }
+            }
+          }
         }
       });
     }
@@ -909,18 +947,175 @@
 
       html += '</tbody></table>';
       reportDiv.innerHTML = html;
+
+      // Show download buttons when there are expenses
+      downloadPdfBtn.style.display = 'inline-block';
+      downloadCsvBtn.style.display = 'inline-block';
     }
+
+
+    // ================================================================
+    // [Function] Download expenses as CSV file
+    // ================================================================
+    function downloadAsCSV() {
+      if (expenses.length === 0) {
+        alert('No expenses to download!');
+        return;
+      }
+
+      const headers = ['Date', 'Description', 'Category', 'Amount (₹)'];
+      const rows = expenses.map(exp => [
+        exp.date || 'N/A',
+        exp.description,
+        exp.category,
+        exp.amount
+      ]);
+
+      // Add summary rows
+      const totalExp = getTotalExpenses();
+      rows.push([]);
+      rows.push(['', 'Total Expenses', '', totalExp]);
+      rows.push(['', 'Salary', '', salary]);
+      rows.push(['', 'Remaining Balance', '', salary - totalExp]);
+
+      // Convert to CSV format
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => {
+          // Escape quotes and wrap in quotes if needed
+          const cellStr = String(cell);
+          return cellStr.includes(',') ? `"${cellStr.replace(/"/g, '""')}"` : cellStr;
+        }).join(','))
+      ].join('\n');
+
+      // Create blob and download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `SpendWise_Report_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+
+    // ================================================================
+    // [Function] Download expenses as PDF file
+    // ================================================================
+    function downloadAsPDF() {
+      if (expenses.length === 0) {
+        alert('No expenses to download!');
+        return;
+      }
+
+      const totalExp = getTotalExpenses();
+      const remaining = salary - totalExp;
+      const date = new Date().toLocaleDateString('en-IN');
+      const filename = `SpendWise_Report_${new Date().toISOString().split('T')[0]}`;
+
+      // Create HTML content for PDF
+      let htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>${filename}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+            h1 { color: #1a56db; margin-bottom: 10px; }
+            .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+            .summary-box { border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; }
+            .summary-box h3 { margin: 0 0 5px 0; font-size: 14px; color: #666; }
+            .summary-box .value { font-size: 18px; font-weight: bold; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th { background: #f8f9fa; padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: bold; }
+            td { padding: 8px; border: 1px solid #ddd; }
+            tr:nth-child(even) { background: #f9f9f9; }
+            .footer { margin-top: 20px; font-size: 12px; color: #999; }
+          </style>
+        </head>
+        <body>
+          <h1>💰 SpendWise - Expense Report</h1>
+          <p>Generated on: ${date}</p>
+
+          <div class="summary">
+            <div class="summary-box">
+              <h3>Salary</h3>
+              <div class="value">₹${salary.toLocaleString()}</div>
+            </div>
+            <div class="summary-box">
+              <h3>Total Expenses</h3>
+              <div class="value" style="color: #c62828;">₹${totalExp.toLocaleString()}</div>
+            </div>
+            <div class="summary-box">
+              <h3>Remaining Balance</h3>
+              <div class="value" style="color: ${remaining < 0 ? '#c62828' : '#2e7d32'};">₹${remaining.toLocaleString()}</div>
+            </div>
+          </div>
+
+          <h3>Expense Breakdown</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      // Add expense rows
+      expenses.forEach(exp => {
+        htmlContent += `
+          <tr>
+            <td>${exp.date || 'N/A'}</td>
+            <td>${exp.description}</td>
+            <td>${exp.category}</td>
+            <td>₹${exp.amount.toLocaleString()}</td>
+          </tr>
+        `;
+      });
+
+      htmlContent += `
+            </tbody>
+          </table>
+
+          <div class="footer">
+            <p>This report was generated by SpendWise - Smart Expense Tracker</p>
+          </div>
+        </body>
+        </html>
+      `;
+
+      // Create a new window and print to PDF
+      const newWindow = window.open('', '', 'height=600,width=800');
+      newWindow.document.write(htmlContent);
+      newWindow.document.close();
+      newWindow.print();
+    }
+
+
+    // ================================================================
+    // [addEventListener: click] Download buttons handlers
+    // ================================================================
+    downloadCsvBtn.addEventListener('click', downloadAsCSV);
+    downloadPdfBtn.addEventListener('click', downloadAsPDF);
 
 
     // ================================================================
     // [Function Call] Initialize the page on load
     // ================================================================
+    setDefaultDate();
     loadData();
     updateSummary();
     renderExpenses();
     renderCategorySummary();
-    renderCharts();
     renderCategoryChart();
+    renderDateWiseSpending();
     renderReport();
 
   </script>
