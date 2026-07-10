@@ -531,23 +531,14 @@
                   <div class="amount" style="color:#e65100;">${formatCurrency(avgExp)}</div></div></div>
                   <div class="col-md-3 col-6"><div class="summary-box" style="background:#ffebee;"><div class="label">Highest</div>
                   <div class="amount" style="color:#c62828; font-size:1.1rem;">${highestCat}</div><small style="color:#999;">${formatCurrency(highestAmt)}</small></div></div>
-                  </div><h6 style="font-weight:600; margin-bottom:12px;">Category Breakdown</h6>
-                  <table class="expense-table"><thead><tr><th>Category</th><th>Amount</th><th>%</th><th>Items</th></tr></thead><tbody>`;
+                  </div>`;
 
-      sorted.forEach(([cat, amt]) => {
-        const pct = ((amt / totalExp) * 100).toFixed(1);
-        const count = expenses.filter(e => e.category === cat).length;
-        const color = COLORS[cat] || '#546e7a';
-        html += `<tr><td><span class="badge-category" style="background:${color}15; color:${color};">${cat}</span></td>
-                 <td style="font-weight:600;">${formatCurrency(amt)}</td><td>${pct}%</td><td>${count}</td></tr>`;
-      });
-
-      DOM.reportSection.innerHTML = html + '</tbody></table>';
+      DOM.reportSection.innerHTML = html;
       DOM.downloadPdfBtn.style.display = 'inline-block';
       DOM.downloadCsvBtn.style.display = 'inline-block';
     }
 
-    // ======================== EVENT HANDLERS ========================
+    // ======================== DOWNLOAD FUNCTIONS ========================
     DOM.setSalaryBtn.addEventListener('click', () => {
       const val = parseFloat(DOM.salary.value);
       if (isNaN(val) || val <= 0) { alert('Enter valid salary'); return; }
