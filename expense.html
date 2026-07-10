@@ -9,70 +9,186 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* ================== GENERAL ================== */
-    body { background: #f5f7fb; font-family: 'Poppins', Arial, sans-serif; color: #333; }
+    /* ==================== GENERAL STYLES ==================== */
+    body { 
+      background: #f5f7fb; 
+      font-family: 'Poppins', Arial, sans-serif; 
+      color: #333; 
+    }
 
-    /* ================== NAVIGATION ================== */
-    .top-nav { background: #1a56db; padding: 12px 0; }
-    .top-nav .brand { font-weight: 700; font-size: 1.25rem; color: #fff; text-decoration: none; }
-    .top-nav .nav-links a { color: rgba(255,255,255,0.85); margin-left: 28px; font-weight: 500; transition: color 0.2s; }
-    .top-nav .nav-links a:hover, .top-nav .nav-links a.active { color: #ffd43b; }
+    /* ==================== NAVIGATION BAR ==================== */
+    .top-nav { 
+      background: #1a56db; 
+      padding: 12px 0; 
+    }
+    .top-nav .brand { 
+      font-weight: 700; 
+      font-size: 1.25rem; 
+      color: #fff; 
+      text-decoration: none; 
+    }
+    .top-nav .nav-links a { 
+      color: rgba(255,255,255,0.85); 
+      margin-left: 28px; 
+      font-weight: 500; 
+      transition: color 0.2s; 
+    }
+    .top-nav .nav-links a:hover, 
+    .top-nav .nav-links a.active { 
+      color: #ffd43b; 
+    }
 
-    /* ================== PAGE TITLE ================== */
-    .page-title { margin: 36px 0 28px; }
-    .page-title h1 { font-weight: 700; font-size: 1.7rem; color: #0d3b66; }
-    .page-title p { color: #6c757d; font-size: 0.95rem; }
+    /* ==================== PAGE TITLE SECTION ==================== */
+    .page-title { 
+      margin: 36px 0 28px; 
+    }
+    .page-title h1 { 
+      font-weight: 700; 
+      font-size: 1.7rem; 
+      color: #0d3b66; 
+    }
+    .page-title p { 
+      color: #6c757d; 
+      font-size: 0.95rem; 
+    }
 
-    /* ================== CARDS & CONTAINERS ================== */
-    .white-card { background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); padding: 28px 24px; margin-bottom: 24px; }
-    .white-card h5 { font-weight: 600; color: #222; margin-bottom: 18px; font-size: 1.05rem; }
+    /* ==================== CARD CONTAINERS ==================== */
+    .white-card { 
+      background: #fff; 
+      border-radius: 16px; 
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06); 
+      padding: 28px 24px; 
+      margin-bottom: 24px; 
+    }
+    .white-card h5 { 
+      font-weight: 600; 
+      color: #222; 
+      margin-bottom: 18px; 
+      font-size: 1.05rem; 
+    }
 
-    /* ================== SUMMARY BOXES (Salary/Expense/Balance) ================== */
-    .summary-box { border-radius: 14px; padding: 20px 18px; text-align: center; }
-    .summary-box .label { font-size: 0.8rem; font-weight: 500; color: #666; margin-bottom: 4px; }
-    .summary-box .amount { font-size: 1.5rem; font-weight: 700; }
+    /* ==================== SUMMARY BOXES (Salary/Expense/Balance) ==================== */
+    .summary-box { 
+      border-radius: 14px; 
+      padding: 20px 18px; 
+      text-align: center; 
+    }
+    .summary-box .label { 
+      font-size: 0.8rem; 
+      font-weight: 500; 
+      color: #666; 
+      margin-bottom: 4px; 
+    }
+    .summary-box .amount { 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+    }
     
-    /* Summary box color variants */
+    /* Different background colors for different box types */
     .bg-income { background: #e8f5e9; }
     .bg-income .amount { color: #2e7d32; }
+    
     .bg-expense { background: #ffebee; }
     .bg-expense .amount { color: #c62828; }
+    
     .bg-balance { background: #e3f2fd; }
     .bg-balance .amount { color: #1565c0; }
 
-    /* ================== FORMS ================== */
-    .form-label { font-weight: 500; font-size: 0.88rem; color: #555; }
-    .form-control, .form-select { border-radius: 10px; border: 1.5px solid #dee2e6; padding: 10px 14px; font-size: 0.92rem; }
-    .form-control:focus, .form-select:focus { border-color: #1a56db; box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
+    /* ==================== FORM INPUTS & SELECTS ==================== */
+    .form-label { 
+      font-weight: 500; 
+      font-size: 0.88rem; 
+      color: #555; 
+    }
+    .form-control, 
+    .form-select { 
+      border-radius: 10px; 
+      border: 1.5px solid #dee2e6; 
+      padding: 10px 14px; 
+      font-size: 0.92rem; 
+    }
+    .form-control:focus, 
+    .form-select:focus { 
+      border-color: #1a56db; 
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.1); 
+    }
 
-    /* ================== TABLES ================== */
-    .expense-table { width: 100%; border-collapse: separate; border-spacing: 0; }
-    .expense-table thead th { background: #f8f9fa; font-weight: 600; font-size: 0.82rem; color: #555; text-transform: uppercase; padding: 12px 14px; border-bottom: 2px solid #e9ecef; }
-    .expense-table tbody td { padding: 12px 14px; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; }
-    .expense-table tbody tr:hover { background: #f8faff; }
+    /* ==================== DATA TABLES ==================== */
+    .expense-table { 
+      width: 100%; 
+      border-collapse: separate; 
+      border-spacing: 0; 
+    }
+    .expense-table thead th { 
+      background: #f8f9fa; 
+      font-weight: 600; 
+      font-size: 0.82rem; 
+      color: #555; 
+      text-transform: uppercase; 
+      padding: 12px 14px; 
+      border-bottom: 2px solid #e9ecef; 
+    }
+    .expense-table tbody td { 
+      padding: 12px 14px; 
+      font-size: 0.9rem; 
+      border-bottom: 1px solid #f0f0f0; 
+    }
+    .expense-table tbody tr:hover { 
+      background: #f8faff; 
+    }
 
-    /* ================== CATEGORY BADGE & BAR ================== */
-    .badge-category { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-    .cat-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
-    .cat-item:last-child { border-bottom: none; }
-    .cat-name { font-size: 0.9rem; font-weight: 500; color: #444; }
-    .cat-amount { font-weight: 600; color: #c62828; font-size: 0.9rem; }
-    .cat-bar { height: 8px; border-radius: 4px; background: #e9ecef; margin-top: 4px; overflow: hidden; }
-    .cat-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+    /* ==================== CATEGORY BADGE ==================== */
+    .badge-category { 
+      padding: 4px 12px; 
+      border-radius: 20px; 
+      font-size: 0.75rem; 
+      font-weight: 600; 
+    }
 
-    /* ================== BUTTONS ================== */
-    .btn-delete { background: none; border: 1px solid #e0e0e0; color: #d32f2f; border-radius: 8px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
-    .btn-delete:hover { background: #ffebee; border-color: #d32f2f; }
+    /* ==================== BUTTONS ==================== */
+    .btn-delete { 
+      background: none; 
+      border: 1px solid #e0e0e0; 
+      color: #d32f2f; 
+      border-radius: 8px; 
+      padding: 4px 12px; 
+      font-size: 0.8rem; 
+      cursor: pointer; 
+      transition: all 0.2s; 
+    }
+    .btn-delete:hover { 
+      background: #ffebee; 
+      border-color: #d32f2f; 
+    }
 
-    /* ================== EMPTY STATE & FOOTER ================== */
-    .empty-msg { text-align: center; padding: 40px 20px; color: #999; }
-    .empty-msg p { font-size: 0.95rem; margin-top: 8px; }
-    .site-footer { background: #212529; color: rgba(255,255,255,0.7); padding: 18px 0; margin-top: 56px; font-size: 0.9rem; }
+    /* ==================== EMPTY STATE ==================== */
+    .empty-msg { 
+      text-align: center; 
+      padding: 40px 20px; 
+      color: #999; 
+    }
+    .empty-msg p { 
+      font-size: 0.95rem; 
+      margin-top: 8px; 
+    }
 
-    /* ================== RESPONSIVE ================== */
+    /* ==================== FOOTER ==================== */
+    .site-footer { 
+      background: #212529; 
+      color: rgba(255,255,255,0.7); 
+      padding: 18px 0; 
+      margin-top: 56px; 
+      font-size: 0.9rem; 
+    }
+
+    /* ==================== MOBILE RESPONSIVE ==================== */
     @media (max-width: 767px) {
-      .top-nav .nav-links { display: none; }
-      .white-card { padding: 20px 16px; }
+      .top-nav .nav-links { 
+        display: none; 
+      }
+      .white-card { 
+        padding: 20px 16px; 
+      }
     }
   </style>
 </head>
@@ -185,14 +301,6 @@
       <!-- ====== RIGHT COLUMN ====== -->
       <div class="col-lg-4">
 
-        <!-- Category-wise Summary -->
-        <div class="white-card">
-          <h5>📂 Category Summary</h5>
-          <div id="categorySummary">
-            <p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see category breakdown</p>
-          </div>
-        </div>
-
         <!-- Category-wise Percentage Chart -->
         <div class="white-card">
           <h5>📊 Spending by Category (%)</h5>
@@ -256,7 +364,6 @@
       downloadPdfBtn: document.getElementById('downloadPdfBtn'),
       downloadCsvBtn: document.getElementById('downloadCsvBtn'),
       clearAllBtn: document.getElementById('clearAllBtn'),
-      categorySummary: document.getElementById('categorySummary'),
       reportSection: document.getElementById('reportSection'),
       categoryChart: document.getElementById('categoryChart'),
       dateWiseSpending: document.getElementById('dateWiseSpending')
@@ -310,32 +417,6 @@
       });
       
       DOM.expenseTableWrap.innerHTML = html + '</tbody></table>';
-    }
-
-    function renderCategorySummary() {
-      if (expenses.length === 0) {
-        DOM.categorySummary.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see category breakdown</p>';
-        return;
-      }
-
-      const totals = expenses.reduce((acc, exp) => {
-        acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
-        return acc;
-      }, {});
-
-      const totalExp = getTotalExpenses();
-      let html = '';
-
-      Object.entries(totals).forEach(([cat, amt]) => {
-        const pct = ((amt / totalExp) * 100).toFixed(1);
-        const color = COLORS[cat] || '#546e7a';
-        html += `<div class="cat-item"><div style="flex:1;"><div class="d-flex justify-content-between">
-                 <span class="cat-name">${cat}</span><span class="cat-amount">${formatCurrency(amt)}</span></div>
-                 <div class="cat-bar"><div class="cat-bar-fill" style="width:${pct}%; background:${color};"></div></div>
-                 <small style="color:#999; font-size:0.75rem;">${pct}% of total</small></div></div>`;
-      });
-
-      DOM.categorySummary.innerHTML = html;
     }
 
     function renderDateWiseSpending() {
@@ -491,7 +572,6 @@
       saveData();
       updateSummary();
       renderExpenses();
-      renderCategorySummary();
       renderCategoryChart();
       renderDateWiseSpending();
       renderReport();
@@ -504,7 +584,6 @@
       saveData();
       updateSummary();
       renderExpenses();
-      renderCategorySummary();
       renderCategoryChart();
       renderDateWiseSpending();
       renderReport();
@@ -516,7 +595,6 @@
         saveData();
         updateSummary();
         renderExpenses();
-        renderCategorySummary();
       }
     });
 
@@ -585,7 +663,6 @@
     DOM.salary.value = salary;
     updateSummary();
     renderExpenses();
-    renderCategorySummary();
     renderCategoryChart();
     renderDateWiseSpending();
     renderReport();
