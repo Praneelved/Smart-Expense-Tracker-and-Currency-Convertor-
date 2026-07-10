@@ -9,233 +9,74 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
-      background-color: #f5f7fb;
-      font-family: 'Poppins', Arial, sans-serif;
-      color: #333;
-    }
+    /* ================== GENERAL ================== */
+    body { background: #f5f7fb; font-family: 'Poppins', Arial, sans-serif; color: #333; }
 
-    /* ---- Navbar ---- */
-    .top-nav {
-      background: #1a56db;
-      padding: 12px 0;
-    }
-    .top-nav .brand {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: #fff;
-      text-decoration: none;
-    }
-    .top-nav .nav-links a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      margin-left: 28px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    .top-nav .nav-links a:hover,
-    .top-nav .nav-links a.active {
-      color: #ffd43b;
-    }
+    /* ================== NAVIGATION ================== */
+    .top-nav { background: #1a56db; padding: 12px 0; }
+    .top-nav .brand { font-weight: 700; font-size: 1.25rem; color: #fff; text-decoration: none; }
+    .top-nav .nav-links a { color: rgba(255,255,255,0.85); margin-left: 28px; font-weight: 500; transition: color 0.2s; }
+    .top-nav .nav-links a:hover, .top-nav .nav-links a.active { color: #ffd43b; }
 
-    /* ---- Page Title ---- */
-    .page-title {
-      margin-top: 36px;
-      margin-bottom: 28px;
-    }
-    .page-title h1 {
-      font-weight: 700;
-      font-size: 1.7rem;
-      color: #0d3b66;
-    }
-    .page-title p {
-      color: #6c757d;
-      font-size: 0.95rem;
-    }
+    /* ================== PAGE TITLE ================== */
+    .page-title { margin: 36px 0 28px; }
+    .page-title h1 { font-weight: 700; font-size: 1.7rem; color: #0d3b66; }
+    .page-title p { color: #6c757d; font-size: 0.95rem; }
 
-    /* ---- Cards ---- */
-    .white-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-      padding: 28px 24px;
-      border: 1px solid rgba(0,0,0,0.04);
-      margin-bottom: 24px;
-    }
-    .white-card h5 {
-      font-weight: 600;
-      color: #222;
-      margin-bottom: 18px;
-      font-size: 1.05rem;
-    }
+    /* ================== CARDS & CONTAINERS ================== */
+    .white-card { background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); padding: 28px 24px; margin-bottom: 24px; }
+    .white-card h5 { font-weight: 600; color: #222; margin-bottom: 18px; font-size: 1.05rem; }
 
-    /* ---- Summary Boxes ---- */
-    .summary-box {
-      border-radius: 14px;
-      padding: 20px 18px;
-      text-align: center;
-    }
-    .summary-box .label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #666;
-      margin-bottom: 4px;
-    }
-    .summary-box .amount {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-    .bg-income {
-      background: #e8f5e9;
-    }
-    .bg-income .amount {
-      color: #2e7d32;
-    }
-    .bg-expense {
-      background: #ffebee;
-    }
-    .bg-expense .amount {
-      color: #c62828;
-    }
-    .bg-balance {
-      background: #e3f2fd;
-    }
-    .bg-balance .amount {
-      color: #1565c0;
-    }
+    /* ================== SUMMARY BOXES (Salary/Expense/Balance) ================== */
+    .summary-box { border-radius: 14px; padding: 20px 18px; text-align: center; }
+    .summary-box .label { font-size: 0.8rem; font-weight: 500; color: #666; margin-bottom: 4px; }
+    .summary-box .amount { font-size: 1.5rem; font-weight: 700; }
+    
+    /* Summary box color variants */
+    .bg-income { background: #e8f5e9; }
+    .bg-income .amount { color: #2e7d32; }
+    .bg-expense { background: #ffebee; }
+    .bg-expense .amount { color: #c62828; }
+    .bg-balance { background: #e3f2fd; }
+    .bg-balance .amount { color: #1565c0; }
 
-    /* ---- Form ---- */
-    .form-label {
-      font-weight: 500;
-      font-size: 0.88rem;
-      color: #555;
-    }
-    .form-control, .form-select {
-      border-radius: 10px;
-      border: 1.5px solid #dee2e6;
-      padding: 10px 14px;
-      font-size: 0.92rem;
-    }
-    .form-control:focus, .form-select:focus {
-      border-color: #1a56db;
-      box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
-    }
+    /* ================== FORMS ================== */
+    .form-label { font-weight: 500; font-size: 0.88rem; color: #555; }
+    .form-control, .form-select { border-radius: 10px; border: 1.5px solid #dee2e6; padding: 10px 14px; font-size: 0.92rem; }
+    .form-control:focus, .form-select:focus { border-color: #1a56db; box-shadow: 0 0 0 3px rgba(26,86,219,0.1); }
 
-    /* ---- Expense Table ---- */
-    .expense-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-    }
-    .expense-table thead th {
-      background: #f8f9fa;
-      font-weight: 600;
-      font-size: 0.82rem;
-      color: #555;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 12px 14px;
-      border-bottom: 2px solid #e9ecef;
-    }
-    .expense-table tbody td {
-      padding: 12px 14px;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #f0f0f0;
-      vertical-align: middle;
-    }
-    .expense-table tbody tr:hover {
-      background: #f8faff;
-    }
-    .badge-category {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .btn-delete {
-      background: none;
-      border: 1px solid #e0e0e0;
-      color: #d32f2f;
-      border-radius: 8px;
-      padding: 4px 12px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-delete:hover {
-      background: #ffebee;
-      border-color: #d32f2f;
-    }
+    /* ================== TABLES ================== */
+    .expense-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .expense-table thead th { background: #f8f9fa; font-weight: 600; font-size: 0.82rem; color: #555; text-transform: uppercase; padding: 12px 14px; border-bottom: 2px solid #e9ecef; }
+    .expense-table tbody td { padding: 12px 14px; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; }
+    .expense-table tbody tr:hover { background: #f8faff; }
 
-    /* ---- Category Summary ---- */
-    .cat-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    .cat-item:last-child {
-      border-bottom: none;
-    }
-    .cat-name {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #444;
-    }
-    .cat-amount {
-      font-weight: 600;
-      color: #c62828;
-      font-size: 0.9rem;
-    }
-    .cat-bar {
-      height: 8px;
-      border-radius: 4px;
-      background: #e9ecef;
-      margin-top: 4px;
-      overflow: hidden;
-    }
-    .cat-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.4s ease;
-    }
+    /* ================== CATEGORY BADGE & BAR ================== */
+    .badge-category { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .cat-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .cat-item:last-child { border-bottom: none; }
+    .cat-name { font-size: 0.9rem; font-weight: 500; color: #444; }
+    .cat-amount { font-weight: 600; color: #c62828; font-size: 0.9rem; }
+    .cat-bar { height: 8px; border-radius: 4px; background: #e9ecef; margin-top: 4px; overflow: hidden; }
+    .cat-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
 
-    /* ---- Empty State ---- */
-    .empty-msg {
-      text-align: center;
-      padding: 40px 20px;
-      color: #999;
-    }
-    .empty-msg p {
-      font-size: 0.95rem;
-      margin-top: 8px;
-    }
+    /* ================== BUTTONS ================== */
+    .btn-delete { background: none; border: 1px solid #e0e0e0; color: #d32f2f; border-radius: 8px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+    .btn-delete:hover { background: #ffebee; border-color: #d32f2f; }
 
-    /* ---- Footer ---- */
-    .site-footer {
-      background: #212529;
-      color: rgba(255,255,255,0.7);
-      padding: 18px 0;
-      margin-top: 56px;
-      font-size: 0.9rem;
-    }
+    /* ================== EMPTY STATE & FOOTER ================== */
+    .empty-msg { text-align: center; padding: 40px 20px; color: #999; }
+    .empty-msg p { font-size: 0.95rem; margin-top: 8px; }
+    .site-footer { background: #212529; color: rgba(255,255,255,0.7); padding: 18px 0; margin-top: 56px; font-size: 0.9rem; }
 
-    /* ---- Responsive ---- */
+    /* ================== RESPONSIVE ================== */
     @media (max-width: 767px) {
-      .top-nav .nav-links {
-        display: none;
-      }
-      .white-card {
-        padding: 20px 16px;
-      }
+      .top-nav .nav-links { display: none; }
+      .white-card { padding: 20px 16px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navbar -->
   <nav class="top-nav">
     <div class="container d-flex align-items-center justify-content-between">
       <a class="brand" href="index.html">💰 Smart Expense Tracker</a>
@@ -248,20 +89,13 @@
       </div>
     </div>
   </nav>
-
-  <!-- Page Title -->
   <div class="container page-title">
     <h1>📊 Expense Tracker</h1>
     <p>Enter your salary, add expenses by category, and track your remaining balance.</p>
   </div>
-
   <div class="container">
     <div class="row">
-
-      <!-- ====== LEFT COLUMN ====== -->
       <div class="col-lg-8">
-
-        <!-- Salary Input Section -->
         <div class="white-card">
           <h5>💼 Set Monthly Salary</h5>
           <div class="row align-items-end">
@@ -274,8 +108,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Summary Boxes -->
         <div class="row g-3 mb-4">
           <div class="col-4">
             <div class="summary-box bg-income">
@@ -296,8 +128,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Add Expense Form -->
         <div class="white-card">
           <h5>➕ Add New Expense</h5>
           <form id="expenseForm">
@@ -410,387 +240,139 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // ================================================================
-    // EXPENSE TRACKER - JavaScript (Vanilla JS)
-    // ================================================================
-    // JS Concepts Used:
-    //   1. DOM Manipulation   - getElementById, querySelector, createElement
-    //   2. Event Listeners    - addEventListener for click, submit events
-    //   3. JS Arrays          - push, filter, reduce, forEach, map
-    //   4. localStorage       - setItem, getItem for data persistence
-    //   5. JSON methods       - JSON.parse, JSON.stringify
-    //   6. ES6 Features       - let/const, arrow functions, template literals,
-    //                           destructuring, default parameters
-    //   7. innerHTML          - dynamically updating HTML content
-    //   8. Conditional Logic  - if/else for validation
-    // ================================================================
-
-
-    // ---- [ES6: const] Block-scoped constant declarations ----
-    // These variables won't be reassigned, so we use const
-    const salaryInput = document.getElementById('salaryInput');
-    const setSalaryBtn = document.getElementById('setSalaryBtn');
-    const expenseForm = document.getElementById('expenseForm');
-    const expDesc = document.getElementById('expDesc');
-    const expAmount = document.getElementById('expAmount');
-    const expDate = document.getElementById('expDate');
-    const expCategory = document.getElementById('expCategory');
-    const displaySalary = document.getElementById('displaySalary');
-    const displayExpenses = document.getElementById('displayExpenses');
-    const displayBalance = document.getElementById('displayBalance');
-    const expenseTableWrap = document.getElementById('expenseTableWrap');
-    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
-    const emptyState = document.getElementById('emptyState');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const categorySummary = document.getElementById('categorySummary');
-
-    // ---- [ES6: let] Block-scoped variable that can be reassigned ----
-    let salary = 0;
-
-    // ---- [JS Array] Array to store all expense objects ----
-    let expenses = [];
-
-    // ---- Category colors for visual badges ----
-    const categoryColors = {
-      Food: '#e65100',
-      Shopping: '#7b1fa2',
-      Travelling: '#1565c0',
-      Medical: '#2e7d32',
-      Entertainment: '#c62828',
-      Bills: '#f57f17',
-      Education: '#00695c',
-      Other: '#546e7a'
+    // ======================== CONSTANTS & VARS ========================
+    const DOM = {
+      salary: document.getElementById('salaryInput'),
+      setSalaryBtn: document.getElementById('setSalaryBtn'),
+      expForm: document.getElementById('expenseForm'),
+      expDesc: document.getElementById('expDesc'),
+      expAmount: document.getElementById('expAmount'),
+      expDate: document.getElementById('expDate'),
+      expCat: document.getElementById('expCategory'),
+      displaySalary: document.getElementById('displaySalary'),
+      displayExpenses: document.getElementById('displayExpenses'),
+      displayBalance: document.getElementById('displayBalance'),
+      expenseTableWrap: document.getElementById('expenseTableWrap'),
+      downloadPdfBtn: document.getElementById('downloadPdfBtn'),
+      downloadCsvBtn: document.getElementById('downloadCsvBtn'),
+      clearAllBtn: document.getElementById('clearAllBtn'),
+      categorySummary: document.getElementById('categorySummary'),
+      reportSection: document.getElementById('reportSection'),
+      categoryChart: document.getElementById('categoryChart'),
+      dateWiseSpending: document.getElementById('dateWiseSpending')
     };
 
+    const COLORS = {
+      Food: '#e65100', Shopping: '#7b1fa2', Travelling: '#1565c0', Medical: '#2e7d32',
+      Entertainment: '#c62828', Bills: '#f57f17', Education: '#00695c', Other: '#546e7a'
+    };
 
-    // ================================================================
-    // [localStorage] Load saved data when page opens
-    // ================================================================
-    // JSON.parse converts the stored string back into a JS array/number
-    function loadData() {
-      const savedSalary = localStorage.getItem('salary');
-      const savedExpenses = localStorage.getItem('expenses');
+    let salary = 0, expenses = [], catChartObj = null;
 
-      if (savedSalary !== null) {
-        salary = JSON.parse(savedSalary);
-        salaryInput.value = salary;
-      }
-
-      if (savedExpenses !== null) {
-        // [JSON.parse] Converting JSON string back to JS Array
-        expenses = JSON.parse(savedExpenses);
-      }
-    }
-
-    // ================================================================
-    // [localStorage] Save data to browser storage
-    // ================================================================
-    // JSON.stringify converts JS array/object into a string for storage
-    function saveData() {
+    // ======================== UTILITY FUNCTIONS ========================
+    const getTotalExpenses = () => expenses.reduce((sum, e) => sum + e.amount, 0);
+    const formatCurrency = (val) => '₹' + val.toLocaleString();
+    const saveData = () => {
       localStorage.setItem('salary', JSON.stringify(salary));
       localStorage.setItem('expenses', JSON.stringify(expenses));
-    }
-
-
-    // ================================================================
-    // [JS Array: reduce] Calculate total expenses from the array
-    // ================================================================
-    // reduce() iterates over array and accumulates a single value
-    const getTotalExpenses = () => {
-      return expenses.reduce((total, expense) => total + expense.amount, 0);
+    };
+    const loadData = () => {
+      if (localStorage.getItem('salary')) salary = JSON.parse(localStorage.getItem('salary'));
+      if (localStorage.getItem('expenses')) expenses = JSON.parse(localStorage.getItem('expenses'));
     };
 
-
-    // ================================================================
-    // [DOM Manipulation: textContent] Update the summary display
-    // ================================================================
+    // ======================== DISPLAY FUNCTIONS ========================
     function updateSummary() {
       const totalExp = getTotalExpenses();
       const remaining = salary - totalExp;
-
-      // [textContent] Setting text content of DOM elements
-      displaySalary.textContent = '₹' + salary.toLocaleString();
-      displayExpenses.textContent = '₹' + totalExp.toLocaleString();
-      displayBalance.textContent = '₹' + remaining.toLocaleString();
-
-      // Change balance color if negative
-      if (remaining < 0) {
-        displayBalance.style.color = '#c62828';
-      } else {
-        displayBalance.style.color = '#1565c0';
-      }
+      DOM.displaySalary.textContent = formatCurrency(salary);
+      DOM.displayExpenses.textContent = formatCurrency(totalExp);
+      DOM.displayBalance.textContent = formatCurrency(remaining);
+      DOM.displayBalance.style.color = remaining < 0 ? '#c62828' : '#1565c0';
     }
 
-
-    // ================================================================
-    // [DOM: innerHTML, createElement] Render the expense table
-    // ================================================================
     function renderExpenses() {
-      // [Conditional] Show/hide empty state and clear button
       if (expenses.length === 0) {
-        expenseTableWrap.innerHTML = '<div class="empty-msg"><p>🪹 No expenses added yet. Start by adding your first expense above!</p></div>';
-        clearAllBtn.style.display = 'none';
+        DOM.expenseTableWrap.innerHTML = '<div class="empty-msg"><p>🪹 No expenses yet</p></div>';
+        DOM.clearAllBtn.style.display = 'none';
         return;
       }
 
-      clearAllBtn.style.display = 'inline-block';
-
-      // [ES6: Template Literal] Building HTML string using backticks
-      let tableHTML = `
-        <table class="expense-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
-      // [JS Array: forEach] Loop through each expense in the array
-      expenses.forEach((expense, index) => {
-        // [ES6: Destructuring] Extracting properties from the object
-        const { description, amount, category, date } = expense;
-        const bgColor = categoryColors[category] || '#546e7a';
-
-        // [ES6: Template Literal] Embedding variables inside strings
-        tableHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${date || 'N/A'}</td>
-            <td>${description}</td>
-            <td><span class="badge-category" style="background:${bgColor}15; color:${bgColor};">${category}</span></td>
-            <td style="font-weight:600; color:#c62828;">₹${amount.toLocaleString()}</td>
-            <td><button class="btn-delete" onclick="deleteExpense(${index})">✕ Remove</button></td>
-          </tr>
-        `;
+      DOM.clearAllBtn.style.display = 'inline-block';
+      let html = '<table class="expense-table"><thead><tr><th>#</th><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th>Action</th></tr></thead><tbody>';
+      
+      expenses.forEach((exp, i) => {
+        const color = COLORS[exp.category] || '#546e7a';
+        html += `<tr><td>${i + 1}</td><td>${exp.date || 'N/A'}</td><td>${exp.description}</td>
+                 <td><span class="badge-category" style="background:${color}15; color:${color};">${exp.category}</span></td>
+                 <td style="font-weight:600; color:#c62828;">${formatCurrency(exp.amount)}</td>
+                 <td><button class="btn-delete" onclick="deleteExpense(${i})">✕ Remove</button></td></tr>`;
       });
-
-      tableHTML += '</tbody></table>';
-
-      // [DOM: innerHTML] Inserting the built HTML into the page
-      expenseTableWrap.innerHTML = tableHTML;
+      
+      DOM.expenseTableWrap.innerHTML = html + '</tbody></table>';
     }
 
-
-    // ================================================================
-    // [JS Array: reduce, forEach] Render category-wise breakdown
-    // ================================================================
     function renderCategorySummary() {
       if (expenses.length === 0) {
-        categorySummary.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see category breakdown</p>';
+        DOM.categorySummary.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see category breakdown</p>';
         return;
       }
 
-      // [JS Array: reduce] Group expenses by category into an object
-      const categoryTotals = expenses.reduce((acc, expense) => {
-        const { category, amount } = expense;
-        if (acc[category]) {
-          acc[category] += amount;
-        } else {
-          acc[category] = amount;
-        }
+      const totals = expenses.reduce((acc, exp) => {
+        acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
         return acc;
       }, {});
 
       const totalExp = getTotalExpenses();
       let html = '';
 
-      // [Object.entries] Convert object to array of [key, value] pairs
-      // [forEach] Loop through each category
-      Object.entries(categoryTotals).forEach(([category, amount]) => {
-        const percentage = totalExp > 0 ? ((amount / totalExp) * 100).toFixed(1) : 0;
-        const color = categoryColors[category] || '#546e7a';
-
-        html += `
-          <div class="cat-item">
-            <div style="flex:1;">
-              <div class="d-flex justify-content-between">
-                <span class="cat-name">${category}</span>
-                <span class="cat-amount">₹${amount.toLocaleString()}</span>
-              </div>
-              <div class="cat-bar">
-                <div class="cat-bar-fill" style="width:${percentage}%; background:${color};"></div>
-              </div>
-              <small style="color:#999; font-size:0.75rem;">${percentage}% of total</small>
-            </div>
-          </div>
-        `;
+      Object.entries(totals).forEach(([cat, amt]) => {
+        const pct = ((amt / totalExp) * 100).toFixed(1);
+        const color = COLORS[cat] || '#546e7a';
+        html += `<div class="cat-item"><div style="flex:1;"><div class="d-flex justify-content-between">
+                 <span class="cat-name">${cat}</span><span class="cat-amount">${formatCurrency(amt)}</span></div>
+                 <div class="cat-bar"><div class="cat-bar-fill" style="width:${pct}%; background:${color};"></div></div>
+                 <small style="color:#999; font-size:0.75rem;">${pct}% of total</small></div></div>`;
       });
 
-      categorySummary.innerHTML = html;
+      DOM.categorySummary.innerHTML = html;
     }
 
-
-    // ================================================================
-    // [addEventListener: click] Set salary button handler
-    // ================================================================
-    setSalaryBtn.addEventListener('click', () => {
-      const value = parseFloat(salaryInput.value);
-
-      // [Conditional] Validation check
-      if (isNaN(value) || value <= 0) {
-        alert('Please enter a valid salary amount.');
-        return;
-      }
-
-      salary = value;
-      saveData();       // [localStorage] Save to browser
-      updateSummary();  // [DOM] Update display
-    });
-
-
-    // ================================================================
-    // [Event: DOMContentLoaded] Set default date to today
-    // ================================================================
-    function setDefaultDate() {
-      const today = new Date().toISOString().split('T')[0];
-      expDate.value = today;
-      expDate.max = today; // Prevent future dates
-    }
-
-    // ================================================================
-    // [addEventListener: submit] Add expense form handler
-    // ================================================================
-    expenseForm.addEventListener('submit', (e) => {
-      // [preventDefault] Stop form from reloading the page
-      e.preventDefault();
-
-      const description = expDesc.value.trim();
-      const amount = parseFloat(expAmount.value);
-      const category = expCategory.value;
-      const date = expDate.value;
-
-      // [Conditional] Validation
-      if (!description || isNaN(amount) || amount <= 0 || !category || !date) {
-        alert('Please fill all fields correctly.');
-        return;
-      }
-
-      // [JS Array: push] Add new expense object to the array
-      expenses.push({
-        description: description,
-        amount: amount,
-        category: category,
-        date: date // Store as YYYY-MM-DD
-      });
-
-      saveData();              // [localStorage] Save updated array
-      updateSummary();         // [DOM] Recalculate totals
-      renderExpenses();        // [DOM] Re-render the table
-      renderCategorySummary(); // [DOM] Update category bars
-      renderCategoryChart();   // [Chart.js] Update category chart
-      renderDateWiseSpending();// [DOM] Update date breakdown
-      renderReport();          // [DOM] Update report
-
-      // [DOM] Reset form fields
-      expenseForm.reset();
-      setDefaultDate(); // Reset date to today
-    });
-
-
-    // ================================================================
-    // [JS Array: filter] Delete a single expense by index
-    // ================================================================
-    // filter() creates a new array excluding the item at the given index
-    function deleteExpense(index) {
-      expenses = expenses.filter((item, i) => i !== index);
-
-      saveData();
-      updateSummary();
-      renderExpenses();
-      renderCategorySummary();
-      renderCategoryChart();
-      renderDateWiseSpending();
-      renderReport();
-    }
-
-
-    // ================================================================
-    // [addEventListener: click] Clear all expenses
-    // ================================================================
-    clearAllBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to delete all expenses?')) {
-        expenses = [];  // [Array] Reset to empty array
-        saveData();
-        updateSummary();
-        renderExpenses();
-        renderCategorySummary();
-      }
-    });
-
-
-    // ================================================================
-    // [DOM] Render date-wise spending breakdown
-    // ================================================================
     function renderDateWiseSpending() {
-      const container = document.getElementById('dateWiseSpending');
-
       if (expenses.length === 0) {
-        container.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>';
+        DOM.dateWiseSpending.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>';
         return;
       }
 
-      // [Array: reduce] Group expenses by date
       const dateMap = expenses.reduce((acc, exp) => {
         const date = exp.date || 'Unknown';
-        if (!acc[date]) {
-          acc[date] = [];
-        }
+        if (!acc[date]) acc[date] = [];
         acc[date].push(exp);
         return acc;
       }, {});
 
-      // [Object.keys + sort] Sort dates in descending order (latest first)
-      const sortedDates = Object.keys(dateMap).sort().reverse();
-
       let html = '<div>';
-      sortedDates.forEach(date => {
-        const dayExpenses = dateMap[date];
-        const dayTotal = dayExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-        
-        // Format date to readable format
-        const dateObj = new Date(date + 'T00:00:00');
-        const dateStr = dateObj.toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+      Object.keys(dateMap).sort().reverse().forEach(date => {
+        const dayExps = dateMap[date];
+        const dayTotal = dayExps.reduce((sum, e) => sum + e.amount, 0);
+        const dateStr = new Date(date + 'T00:00:00').toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
 
-        html += `
-          <div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <strong style="color: #333; font-size: 0.95rem;">${dateStr}</strong>
-              <span style="font-weight: 600; color: #c62828; font-size: 0.95rem;">₹${dayTotal.toLocaleString()}</span>
-            </div>
-            <div style="margin-left: 8px;">
-        `;
+        html += `<div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0;">
+                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                 <strong style="color: #333;">${dateStr}</strong><span style="font-weight: 600; color: #c62828;">${formatCurrency(dayTotal)}</span></div><div style="margin-left: 8px;">`;
 
-        dayExpenses.forEach(exp => {
-          const color = categoryColors[exp.category] || '#546e7a';
-          html += `
-            <div style="font-size: 0.85rem; padding: 4px 0; display: flex; justify-content: space-between;">
-              <span style="color: #666;">
-                <span style="color: ${color}; font-weight: 500;">${exp.category}</span> - ${exp.description}
-              </span>
-              <span style="color: #999;">₹${exp.amount.toLocaleString()}</span>
-            </div>
-          `;
+        dayExps.forEach(exp => {
+          const color = COLORS[exp.category] || '#546e7a';
+          html += `<div style="font-size: 0.85rem; padding: 4px 0; display: flex; justify-content: space-between;">
+                   <span><span style="color: ${color}; font-weight: 500;">${exp.category}</span> - ${exp.description}</span>
+                   <span style="color: #999;">${formatCurrency(exp.amount)}</span></div>`;
         });
 
         html += '</div></div>';
       });
-      html += '</div>';
 
-      container.innerHTML = html;
+      DOM.dateWiseSpending.innerHTML = html + '</div>';
     }
-
-
-    // ================================================================
-    // [Chart.js] Render category-wise spending with percentages
-    // ================================================================
-    let catChartObj = null;
 
     function renderCategoryChart() {
       const canvas = document.getElementById('categoryChart');
@@ -799,14 +381,14 @@
       if (expenses.length === 0) {
         emptyMsg.style.display = 'block';
         canvas.style.display = 'none';
-        if (catChartObj) { catChartObj.destroy(); catChartObj = null; }
+        if (catChartObj) catChartObj.destroy();
+        catChartObj = null;
         return;
       }
 
       emptyMsg.style.display = 'none';
       canvas.style.display = 'block';
 
-      // [Array: reduce] Group totals by category
       const totals = expenses.reduce((acc, exp) => {
         acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
         return acc;
@@ -815,310 +397,198 @@
       const labels = Object.keys(totals);
       const data = Object.values(totals);
       const totalExp = getTotalExpenses();
-      
-      // [Array: map] Create labels with percentages
+
       const labelsWithPercent = labels.map(label => {
-        const percentage = ((totals[label] / totalExp) * 100).toFixed(1);
-        return `${label} (${percentage}%)`;
+        const pct = ((totals[label] / totalExp) * 100).toFixed(1);
+        return `${label} (${pct}%)`;
       });
 
-      // [Array: map] Map each category to its color
-      const colors = labels.map(cat => categoryColors[cat] || '#546e7a');
+      const colors = labels.map(cat => COLORS[cat] || '#546e7a');
 
       if (catChartObj) catChartObj.destroy();
 
-      // [Chart.js] Pie chart — each slice = one category with percentage
       catChartObj = new Chart(canvas, {
         type: 'pie',
         data: {
           labels: labelsWithPercent,
-          datasets: [{ 
-            data: data, 
-            backgroundColor: colors, 
-            borderWidth: 2, 
-            borderColor: '#fff',
-            hoverOffset: 10
-          }]
+          datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 10 }]
         },
         options: {
           responsive: true,
-          plugins: { 
-            legend: { 
-              position: 'bottom', 
-              labels: { 
-                padding: 15, 
-                font: { size: 12, weight: '500' },
-                usePointStyle: true
-              } 
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  const percentage = ((context.parsed / totalExp) * 100).toFixed(1);
-                  return `₹${context.parsed.toLocaleString()} (${percentage}%)`;
-                }
-              }
-            }
+          plugins: {
+            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12, weight: '500' }, usePointStyle: true } },
+            tooltip: { callbacks: { label: (ctx) => `${formatCurrency(ctx.parsed)} (${((ctx.parsed / totalExp) * 100).toFixed(1)}%)` } }
           }
         }
       });
     }
 
-
-    // ================================================================
-    // [DOM + Array] Render spending report
-    // ================================================================
     function renderReport() {
-      const reportDiv = document.getElementById('reportSection');
-
       if (expenses.length === 0) {
-        reportDiv.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to generate your spending report</p>';
+        DOM.reportSection.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to generate your spending report</p>';
         return;
       }
 
       const totalExp = getTotalExpenses();
       const remaining = salary - totalExp;
-      const avgPerExpense = (totalExp / expenses.length).toFixed(0);
+      const avgExp = (totalExp / expenses.length).toFixed(0);
 
-      // [Array: reduce] Find category totals
       const catTotals = expenses.reduce((acc, exp) => {
         acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
         return acc;
       }, {});
 
-      // [Object.entries + sort] Find highest spending category
       const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
-      const highestCat = sorted[0] ? sorted[0][0] : '-';
-      const highestAmt = sorted[0] ? sorted[0][1] : 0;
+      const [highestCat, highestAmt] = sorted[0] || ['-', 0];
 
-      // [Template Literal] Build report HTML
-      let html = `
-        <div class="row g-3 mb-4">
-          <div class="col-md-3 col-6">
-            <div class="summary-box" style="background:#f3e5f5;">
-              <div class="label">Total Expenses</div>
-              <div class="amount" style="color:#7b1fa2;">₹${totalExp.toLocaleString()}</div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="summary-box" style="background:#e3f2fd;">
-              <div class="label">Remaining Balance</div>
-              <div class="amount" style="color:${remaining < 0 ? '#c62828' : '#1565c0'};">₹${remaining.toLocaleString()}</div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="summary-box" style="background:#fff3e0;">
-              <div class="label">Avg per Expense</div>
-              <div class="amount" style="color:#e65100;">₹${parseInt(avgPerExpense).toLocaleString()}</div>
-            </div>
-          </div>
-          <div class="col-md-3 col-6">
-            <div class="summary-box" style="background:#ffebee;">
-              <div class="label">Highest Category</div>
-              <div class="amount" style="color:#c62828; font-size:1.1rem;">${highestCat}</div>
-              <small style="color:#999;">₹${highestAmt.toLocaleString()}</small>
-            </div>
-          </div>
-        </div>
+      let html = `<div class="row g-3 mb-4">
+                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#f3e5f5;"><div class="label">Total Expenses</div>
+                  <div class="amount" style="color:#7b1fa2;">${formatCurrency(totalExp)}</div></div></div>
+                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#e3f2fd;"><div class="label">Remaining</div>
+                  <div class="amount" style="color:${remaining < 0 ? '#c62828' : '#1565c0'};">${formatCurrency(remaining)}</div></div></div>
+                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#fff3e0;"><div class="label">Avg/Expense</div>
+                  <div class="amount" style="color:#e65100;">${formatCurrency(avgExp)}</div></div></div>
+                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#ffebee;"><div class="label">Highest</div>
+                  <div class="amount" style="color:#c62828; font-size:1.1rem;">${highestCat}</div><small style="color:#999;">${formatCurrency(highestAmt)}</small></div></div>
+                  </div><h6 style="font-weight:600; margin-bottom:12px;">Category Breakdown</h6>
+                  <table class="expense-table"><thead><tr><th>Category</th><th>Amount</th><th>%</th><th>Items</th></tr></thead><tbody>`;
 
-        <h6 style="font-weight:600; margin-bottom:12px;">Category Breakdown</h6>
-        <table class="expense-table">
-          <thead>
-            <tr><th>Category</th><th>Amount</th><th>% of Total</th><th>No. of Items</th></tr>
-          </thead>
-          <tbody>
-      `;
-
-      // [forEach] Build each row of the report table
       sorted.forEach(([cat, amt]) => {
         const pct = ((amt / totalExp) * 100).toFixed(1);
-        // [Array: filter] Count items in this category
         const count = expenses.filter(e => e.category === cat).length;
-        const color = categoryColors[cat] || '#546e7a';
-        html += `
-          <tr>
-            <td><span class="badge-category" style="background:${color}15; color:${color};">${cat}</span></td>
-            <td style="font-weight:600;">₹${amt.toLocaleString()}</td>
-            <td>${pct}%</td>
-            <td>${count}</td>
-          </tr>
-        `;
+        const color = COLORS[cat] || '#546e7a';
+        html += `<tr><td><span class="badge-category" style="background:${color}15; color:${color};">${cat}</span></td>
+                 <td style="font-weight:600;">${formatCurrency(amt)}</td><td>${pct}%</td><td>${count}</td></tr>`;
       });
 
-      html += '</tbody></table>';
-      reportDiv.innerHTML = html;
-
-      // Show download buttons when there are expenses
-      downloadPdfBtn.style.display = 'inline-block';
-      downloadCsvBtn.style.display = 'inline-block';
+      DOM.reportSection.innerHTML = html + '</tbody></table>';
+      DOM.downloadPdfBtn.style.display = 'inline-block';
+      DOM.downloadCsvBtn.style.display = 'inline-block';
     }
 
+    // ======================== EVENT HANDLERS ========================
+    DOM.setSalaryBtn.addEventListener('click', () => {
+      const val = parseFloat(DOM.salary.value);
+      if (isNaN(val) || val <= 0) { alert('Enter valid salary'); return; }
+      salary = val;
+      saveData();
+      updateSummary();
+    });
 
-    // ================================================================
-    // [Function] Download expenses as CSV file
-    // ================================================================
+    DOM.expForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const desc = DOM.expDesc.value.trim();
+      const amt = parseFloat(DOM.expAmount.value);
+      const cat = DOM.expCat.value;
+      const date = DOM.expDate.value;
+
+      if (!desc || isNaN(amt) || amt <= 0 || !cat || !date) {
+        alert('Fill all fields');
+        return;
+      }
+
+      expenses.push({ description: desc, amount: amt, category: cat, date });
+      saveData();
+      updateSummary();
+      renderExpenses();
+      renderCategorySummary();
+      renderCategoryChart();
+      renderDateWiseSpending();
+      renderReport();
+      DOM.expForm.reset();
+      setDefaultDate();
+    });
+
+    window.deleteExpense = (index) => {
+      expenses = expenses.filter((_, i) => i !== index);
+      saveData();
+      updateSummary();
+      renderExpenses();
+      renderCategorySummary();
+      renderCategoryChart();
+      renderDateWiseSpending();
+      renderReport();
+    };
+
+    DOM.clearAllBtn.addEventListener('click', () => {
+      if (confirm('Delete all expenses?')) {
+        expenses = [];
+        saveData();
+        updateSummary();
+        renderExpenses();
+        renderCategorySummary();
+      }
+    });
+
+    // ======================== DOWNLOAD FUNCTIONS ========================
     function downloadAsCSV() {
-      if (expenses.length === 0) {
-        alert('No expenses to download!');
-        return;
-      }
+      if (expenses.length === 0) { alert('No expenses'); return; }
 
-      const headers = ['Date', 'Description', 'Category', 'Amount (₹)'];
-      const rows = expenses.map(exp => [
-        exp.date || 'N/A',
-        exp.description,
-        exp.category,
-        exp.amount
-      ]);
+      const headers = ['Date', 'Description', 'Category', 'Amount'];
+      const rows = expenses.map(e => [e.date || 'N/A', e.description, e.category, e.amount]);
+      rows.push([], ['', 'Total Expenses', '', getTotalExpenses()], ['', 'Salary', '', salary], ['', 'Balance', '', salary - getTotalExpenses()]);
 
-      // Add summary rows
-      const totalExp = getTotalExpenses();
-      rows.push([]);
-      rows.push(['', 'Total Expenses', '', totalExp]);
-      rows.push(['', 'Salary', '', salary]);
-      rows.push(['', 'Remaining Balance', '', salary - totalExp]);
-
-      // Convert to CSV format
-      const csvContent = [
-        headers.join(','),
-        ...rows.map(row => row.map(cell => {
-          // Escape quotes and wrap in quotes if needed
-          const cellStr = String(cell);
-          return cellStr.includes(',') ? `"${cellStr.replace(/"/g, '""')}"` : cellStr;
-        }).join(','))
-      ].join('\n');
-
-      // Create blob and download
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
+      const csv = [headers.join(','), ...rows.map(r => r.map(c => String(c).includes(',') ? `"${String(c)}"` : c).join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `SpendWise_Report_${new Date().toISOString().split('T')[0]}.csv`);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `SpendWise_Report_${new Date().toISOString().split('T')[0]}.csv`;
       link.click();
-      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
 
-
-    // ================================================================
-    // [Function] Download expenses as PDF file
-    // ================================================================
     function downloadAsPDF() {
-      if (expenses.length === 0) {
-        alert('No expenses to download!');
-        return;
-      }
+      if (expenses.length === 0) { alert('No expenses'); return; }
 
       const totalExp = getTotalExpenses();
       const remaining = salary - totalExp;
       const date = new Date().toLocaleDateString('en-IN');
-      const filename = `SpendWise_Report_${new Date().toISOString().split('T')[0]}`;
 
-      // Create HTML content for PDF
-      let htmlContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>${filename}</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
-            h1 { color: #1a56db; margin-bottom: 10px; }
-            .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-            .summary-box { border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; }
-            .summary-box h3 { margin: 0 0 5px 0; font-size: 14px; color: #666; }
-            .summary-box .value { font-size: 18px; font-weight: bold; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th { background: #f8f9fa; padding: 10px; text-align: left; border: 1px solid #ddd; font-weight: bold; }
-            td { padding: 8px; border: 1px solid #ddd; }
-            tr:nth-child(even) { background: #f9f9f9; }
-            .footer { margin-top: 20px; font-size: 12px; color: #999; }
-          </style>
-        </head>
-        <body>
-          <h1>💰 SpendWise - Expense Report</h1>
-          <p>Generated on: ${date}</p>
+      let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SpendWise Report</title>
+                  <style>body{font-family:Arial;margin:20px;color:#333;}h1{color:#1a56db;margin-bottom:10px;}
+                  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+                  .summary-box{border:1px solid #ddd;padding:10px;border-radius:5px;text-align:center;}
+                  .summary-box h3{margin:0 0 5px;font-size:14px;color:#666;}.summary-box .value{font-size:18px;font-weight:bold;}
+                  table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f8f9fa;padding:10px;text-align:left;border:1px solid #ddd;font-weight:bold;}
+                  td{padding:8px;border:1px solid #ddd;}tr:nth-child(even){background:#f9f9f9;}.footer{margin-top:20px;font-size:12px;color:#999;}
+                  </style></head><body><h1>💰 SpendWise - Expense Report</h1><p>Generated on: ${date}</p>
+                  <div class="summary"><div class="summary-box"><h3>Salary</h3><div class="value">${formatCurrency(salary)}</div></div>
+                  <div class="summary-box"><h3>Total Expenses</h3><div class="value" style="color: #c62828;">${formatCurrency(totalExp)}</div></div>
+                  <div class="summary-box"><h3>Remaining</h3><div class="value" style="color: ${remaining < 0 ? '#c62828' : '#2e7d32'};">${formatCurrency(remaining)}</div></div></div>
+                  <h3>Expense Breakdown</h3><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody>`;
 
-          <div class="summary">
-            <div class="summary-box">
-              <h3>Salary</h3>
-              <div class="value">₹${salary.toLocaleString()}</div>
-            </div>
-            <div class="summary-box">
-              <h3>Total Expenses</h3>
-              <div class="value" style="color: #c62828;">₹${totalExp.toLocaleString()}</div>
-            </div>
-            <div class="summary-box">
-              <h3>Remaining Balance</h3>
-              <div class="value" style="color: ${remaining < 0 ? '#c62828' : '#2e7d32'};">₹${remaining.toLocaleString()}</div>
-            </div>
-          </div>
-
-          <h3>Expense Breakdown</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Amount (₹)</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-
-      // Add expense rows
       expenses.forEach(exp => {
-        htmlContent += `
-          <tr>
-            <td>${exp.date || 'N/A'}</td>
-            <td>${exp.description}</td>
-            <td>${exp.category}</td>
-            <td>₹${exp.amount.toLocaleString()}</td>
-          </tr>
-        `;
+        html += `<tr><td>${exp.date || 'N/A'}</td><td>${exp.description}</td><td>${exp.category}</td><td>${formatCurrency(exp.amount)}</td></tr>`;
       });
 
-      htmlContent += `
-            </tbody>
-          </table>
-
-          <div class="footer">
-            <p>This report was generated by SpendWise - Smart Expense Tracker</p>
-          </div>
-        </body>
-        </html>
-      `;
-
-      // Create a new window and print to PDF
-      const newWindow = window.open('', '', 'height=600,width=800');
-      newWindow.document.write(htmlContent);
-      newWindow.document.close();
-      newWindow.print();
+      html += `</tbody></table><div class="footer"><p>Generated by SpendWise - Smart Expense Tracker</p></div></body></html>`;
+      
+      const win = window.open();
+      win.document.write(html);
+      win.document.close();
+      win.print();
     }
 
+    DOM.downloadCsvBtn.addEventListener('click', downloadAsCSV);
+    DOM.downloadPdfBtn.addEventListener('click', downloadAsPDF);
 
-    // ================================================================
-    // [addEventListener: click] Download buttons handlers
-    // ================================================================
-    downloadCsvBtn.addEventListener('click', downloadAsCSV);
-    downloadPdfBtn.addEventListener('click', downloadAsPDF);
+    // ======================== INIT ========================
+    function setDefaultDate() {
+      const today = new Date().toISOString().split('T')[0];
+      DOM.expDate.value = today;
+      DOM.expDate.max = today;
+    }
 
-
-    // ================================================================
-    // [Function Call] Initialize the page on load
-    // ================================================================
     setDefaultDate();
     loadData();
+    DOM.salary.value = salary;
     updateSummary();
     renderExpenses();
     renderCategorySummary();
     renderCategoryChart();
     renderDateWiseSpending();
     renderReport();
-
   </script>
-
 </body>
 </html>
