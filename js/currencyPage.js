@@ -74,6 +74,32 @@ function initConverter() {
     triggerConversion();
   });
 
+  // Copy result action
+  const copyBtn = document.getElementById('btnCopyResult');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const finalValEl = document.getElementById('convertedFinalAmount');
+      const val = finalValEl ? finalValEl.textContent.trim() : '';
+      if (!val || val === '--' || val === 'Error') {
+        UI.showToast('No valid converted value to copy', 'warning');
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(val);
+        UI.showToast(`Copied ${val} to clipboard!`, 'success');
+      } catch (e) {
+        // Fallback for older browsers
+        const tempInp = document.createElement('input');
+        tempInp.value = val;
+        document.body.appendChild(tempInp);
+        tempInp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInp);
+        UI.showToast(`Copied ${val} to clipboard!`, 'success');
+      }
+    });
+  }
+
   // Force refresh
   if (refreshBtn) {
     refreshBtn.addEventListener('click', async () => {

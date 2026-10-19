@@ -160,6 +160,21 @@ async function runAllTests() {
     assert.strictEqual(store.getExpenses().some(e => e.id === added.id), false);
   });
 
+  test('Category budgets: updates and persists individual category spending caps', () => {
+    store.setCategoryBudget('Food', 15000);
+    const budgets = store.getCategoryBudgets();
+    assert.strictEqual(budgets['Food'], 15000);
+  });
+
+  test('Settings persistence: updates base reporting currency and theme', () => {
+    store.updateSettings({ baseCurrency: 'USD', theme: 'dark' });
+    const settings = store.getSettings();
+    assert.strictEqual(settings.baseCurrency, 'USD');
+    assert.strictEqual(settings.theme, 'dark');
+    // revert back
+    store.updateSettings({ baseCurrency: 'INR', theme: 'light' });
+  });
+
   console.log('\n--- 5. Currency Converter Service Tests ---');
 
   await (async () => {
@@ -204,6 +219,17 @@ async function runAllTests() {
     assert.throws(() => {
       store.importJSON('{ malformed json ...');
     });
+  });
+
+  test('Date period filtering: handles custom date intervals', () => {
+    const expenses = [
+      { date: '2026-01-10', amount: 500 },
+      { date: '2026-02-15', amount: 1500 },
+      { date: '2026-03-20', amount: 2500 }
+    ];
+    const filtered = FinancialAnalytics.filterByPeriod(expenses, 'custom', '2026-02-01', '2026-02-28');
+    assert.strictEqual(filtered.length, 1);
+    assert.strictEqual(filtered[0].amount, 1500);
   });
 
   console.log('\n======================================================');

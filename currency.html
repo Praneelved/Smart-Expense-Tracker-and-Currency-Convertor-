@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Top Navigation Header -->
   <header class="app-header">
@@ -35,6 +37,7 @@
         <li><a href="currency.html" class="nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path></svg>Currency Hub</a></li>
         <li><a href="analytics.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Analytics</a></li>
         <li><a href="sdg.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>SDG Goals</a></li>
+        <li><a href="settings.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Settings</a></li>
         <li><a href="about.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>About</a></li>
       </ul>
 
@@ -71,12 +74,13 @@
       <li><a href="currency.html" class="mobile-nav-link active">💱 Currency Converter</a></li>
       <li><a href="analytics.html" class="mobile-nav-link">📈 Analytics &amp; Insights</a></li>
       <li><a href="sdg.html" class="mobile-nav-link">🌱 SDG Impact</a></li>
+      <li><a href="settings.html" class="mobile-nav-link">⚙️ Settings &amp; Data</a></li>
       <li><a href="about.html" class="mobile-nav-link">ℹ️ About &amp; Architecture</a></li>
     </ul>
   </aside>
 
   <!-- Main Content Container -->
-  <main class="container" style="padding-top: 24px; padding-bottom: 60px;">
+  <main class="container" id="main-content" style="padding-top: 24px; padding-bottom: 60px;">
     
     <div class="page-header">
       <div class="page-title-group">
@@ -155,7 +159,15 @@
         <div class="conversion-result-card" id="conversionResultCard">
           <div class="conversion-rate-text" id="primaryExchangeRateText">Calculating exchange rate...</div>
           <div class="conversion-final-value num-tabular" id="convertedFinalAmount">--</div>
-          <div style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:8px;" id="inverseExchangeRateText">--</div>
+          <div style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:12px;" id="inverseExchangeRateText">--</div>
+          
+          <div style="display:flex; justify-content:center; gap:8px; margin-bottom:12px;">
+            <button class="btn btn-outline btn-sm" id="btnCopyResult" title="Copy converted figure to clipboard">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Result
+            </button>
+          </div>
+
           <div class="conversion-timestamp" id="rateTimestampText">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span id="rateAttribution">Verified Market Rate via Open Exchange API</span>
