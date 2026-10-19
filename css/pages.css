@@ -1,0 +1,287 @@
+/* ==========================================================================
+   SpendWise Page Styles - Dashboard, Expenses, Currency, Analytics & SDG
+   ========================================================================== */
+
+/* Page Header */
+.page-header {
+  padding: 32px 0 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-title-group h1 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.page-title-group p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Hero Section (Landing & Dashboard) */
+.hero-banner {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner-content {
+  max-width: 620px;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-banner h1 {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+
+.hero-banner p {
+  font-size: 1.05rem;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+}
+
+.hero-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Quick Exchange Widget on Dashboard */
+.exchange-ticker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.exchange-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 0.825rem;
+  font-weight: 500;
+}
+
+.exchange-ticker-pair {
+  color: var(--text-secondary);
+}
+
+.exchange-ticker-rate {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Filter & Search Bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Currency Converter Page */
+.converter-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.converter-card {
+  padding: 36px;
+}
+
+.currency-swap-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.currency-swap-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.currency-swap-btn:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  transform: rotate(180deg);
+}
+
+.conversion-result-card {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.conversion-rate-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.conversion-final-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.conversion-timestamp {
+  font-size: 0.775rem;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Insight Cards on Analytics & Dashboard */
+.insight-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 12px;
+}
+
+.insight-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.insight-content h6 {
+  font-size: 0.925rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.insight-content p {
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* SDG Feature Cards */
+.sdg-card-premium {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  transition: transform var(--transition-normal);
+}
+
+.sdg-card-premium:hover {
+  transform: translateY(-4px);
+}
+
+.sdg-banner-8 {
+  background: linear-gradient(135deg, #a21942 0%, #831233 100%);
+  color: #ffffff;
+  padding: 24px;
+}
+
+.sdg-banner-12 {
+  background: linear-gradient(135deg, #cf8d2a 0%, #a66f1c 100%);
+  color: #ffffff;
+  padding: 24px;
+}
+
+.sdg-body-content {
+  padding: 24px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 24px;
+  }
+  .hero-banner h1 {
+    font-size: 1.75rem;
+  }
+  .converter-card {
+    padding: 20px;
+  }
+  .conversion-final-value {
+    font-size: 2rem;
+  }
+}

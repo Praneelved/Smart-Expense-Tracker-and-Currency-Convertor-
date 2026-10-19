@@ -1,662 +1,380 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Expense Tracker - Smart Expense Tracker</title>
-  <meta name="description" content="Track your daily expenses by category. Enter salary, add expenses and see remaining balance instantly.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* ==================== GENERAL STYLES ==================== */
-    body { 
-      background: #f5f7fb; 
-      font-family: 'Poppins', Arial, sans-serif; 
-      color: #333; 
-    }
-
-    /* ==================== NAVIGATION BAR ==================== */
-    .top-nav { 
-      background: #1a56db; 
-      padding: 12px 0; 
-    }
-    .top-nav .brand { 
-      font-weight: 700; 
-      font-size: 1.25rem; 
-      color: #fff; 
-      text-decoration: none; 
-    }
-    .top-nav .nav-links a { 
-      color: rgba(255,255,255,0.85); 
-      margin-left: 28px; 
-      font-weight: 500; 
-      transition: color 0.2s; 
-    }
-    .top-nav .nav-links a:hover, 
-    .top-nav .nav-links a.active { 
-      color: #ffd43b; 
-    }
-
-    /* ==================== PAGE TITLE SECTION ==================== */
-    .page-title { 
-      margin: 36px 0 28px; 
-    }
-    .page-title h1 { 
-      font-weight: 700; 
-      font-size: 1.7rem; 
-      color: #0d3b66; 
-    }
-    .page-title p { 
-      color: #6c757d; 
-      font-size: 0.95rem; 
-    }
-
-    /* ==================== CARD CONTAINERS ==================== */
-    .white-card { 
-      background: #fff; 
-      border-radius: 16px; 
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06); 
-      padding: 28px 24px; 
-      margin-bottom: 24px; 
-    }
-    .white-card h5 { 
-      font-weight: 600; 
-      color: #222; 
-      margin-bottom: 18px; 
-      font-size: 1.05rem; 
-    }
-
-    /* ==================== SUMMARY BOXES (Salary/Expense/Balance) ==================== */
-    .summary-box { 
-      border-radius: 14px; 
-      padding: 20px 18px; 
-      text-align: center; 
-    }
-    .summary-box .label { 
-      font-size: 0.8rem; 
-      font-weight: 500; 
-      color: #666; 
-      margin-bottom: 4px; 
-    }
-    .summary-box .amount { 
-      font-size: 1.5rem; 
-      font-weight: 700; 
-    }
-    
-    /* Different background colors for different box types */
-    .bg-income { background: #e8f5e9; }
-    .bg-income .amount { color: #2e7d32; }
-    
-    .bg-expense { background: #ffebee; }
-    .bg-expense .amount { color: #c62828; }
-    
-    .bg-balance { background: #e3f2fd; }
-    .bg-balance .amount { color: #1565c0; }
-
-    /* ==================== FORM INPUTS & SELECTS ==================== */
-    .form-label { 
-      font-weight: 500; 
-      font-size: 0.88rem; 
-      color: #555; 
-    }
-    .form-control, 
-    .form-select { 
-      border-radius: 10px; 
-      border: 1.5px solid #dee2e6; 
-      padding: 10px 14px; 
-      font-size: 0.92rem; 
-    }
-    .form-control:focus, 
-    .form-select:focus { 
-      border-color: #1a56db; 
-      box-shadow: 0 0 0 3px rgba(26,86,219,0.1); 
-    }
-
-    /* ==================== DATA TABLES ==================== */
-    .expense-table { 
-      width: 100%; 
-      border-collapse: separate; 
-      border-spacing: 0; 
-    }
-    .expense-table thead th { 
-      background: #f8f9fa; 
-      font-weight: 600; 
-      font-size: 0.82rem; 
-      color: #555; 
-      text-transform: uppercase; 
-      padding: 12px 14px; 
-      border-bottom: 2px solid #e9ecef; 
-    }
-    .expense-table tbody td { 
-      padding: 12px 14px; 
-      font-size: 0.9rem; 
-      border-bottom: 1px solid #f0f0f0; 
-    }
-    .expense-table tbody tr:hover { 
-      background: #f8faff; 
-    }
-
-    /* ==================== CATEGORY BADGE ==================== */
-    .badge-category { 
-      padding: 4px 12px; 
-      border-radius: 20px; 
-      font-size: 0.75rem; 
-      font-weight: 600; 
-    }
-
-    /* ==================== BUTTONS ==================== */
-    .btn-delete { 
-      background: none; 
-      border: 1px solid #e0e0e0; 
-      color: #d32f2f; 
-      border-radius: 8px; 
-      padding: 4px 12px; 
-      font-size: 0.8rem; 
-      cursor: pointer; 
-      transition: all 0.2s; 
-    }
-    .btn-delete:hover { 
-      background: #ffebee; 
-      border-color: #d32f2f; 
-    }
-
-    /* ==================== EMPTY STATE ==================== */
-    .empty-msg { 
-      text-align: center; 
-      padding: 40px 20px; 
-      color: #999; 
-    }
-    .empty-msg p { 
-      font-size: 0.95rem; 
-      margin-top: 8px; 
-    }
-
-    /* ==================== FOOTER ==================== */
-    .site-footer { 
-      background: #212529; 
-      color: rgba(255,255,255,0.7); 
-      padding: 18px 0; 
-      margin-top: 56px; 
-      font-size: 0.9rem; 
-    }
-
-    /* ==================== MOBILE RESPONSIVE ==================== */
-    @media (max-width: 767px) {
-      .top-nav .nav-links { 
-        display: none; 
-      }
-      .white-card { 
-        padding: 20px 16px; 
-      }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpendWise — Expense &amp; Budget Management Suite</title>
+  <meta name="description" content="Manage daily expenses, plan monthly category budgets, track payment methods, search and filter transactions, and export reports.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
-  <nav class="top-nav">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a class="brand" href="index.html">💰 Smart Expense Tracker</a>
-      <div class="nav-links d-none d-md-block">
-        <a href="index.html">Home</a>
-        <a href="expense.html" class="active">Expense Tracker</a>
-        <a href="currency.html">Currency Converter</a>
-        <a href="sdg.html">SDG</a>
-        <a href="about.html">About</a>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand-link">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+        <div class="brand-name">
+          <span class="brand-title">SpendWise</span>
+          <span class="brand-subtitle">Smart FinTech</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Dashboard</a></li>
+        <li><a href="expense.html" class="nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>Expenses &amp; Budgets</a></li>
+        <li><a href="currency.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path></svg>Currency Hub</a></li>
+        <li><a href="analytics.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Analytics</a></li>
+        <li><a href="sdg.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>SDG Goals</a></li>
+        <li><a href="about.html" class="nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>About</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <button class="btn-theme-toggle" aria-label="Toggle Dark/Light Mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+        </button>
+        <button class="btn-quick-add btn-trigger-quick-add">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>New Expense</span>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Open Navigation Menu">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
-  </nav>
-  <div class="container page-title">
-    <h1>📊 Expense Tracker</h1>
-    <p>Enter your salary, add expenses by category, and track your remaining balance.</p>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8">
-        <div class="white-card">
-          <h5>💼 Set Monthly Salary</h5>
-          <div class="row align-items-end">
-            <div class="col-md-8 mb-2 mb-md-0">
-              <label for="salaryInput" class="form-label">Enter your monthly salary (₹)</label>
-              <input type="number" class="form-control" id="salaryInput" placeholder="e.g. 50000" min="0">
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-backdrop"></div>
+  <aside class="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-link">
+        <div class="brand-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+        <span class="brand-title">SpendWise</span>
+      </div>
+      <button class="modal-close mobile-drawer-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="index.html" class="mobile-nav-link">📊 Dashboard</a></li>
+      <li><a href="expense.html" class="mobile-nav-link active">💳 Expenses &amp; Budgets</a></li>
+      <li><a href="currency.html" class="mobile-nav-link">💱 Currency Converter</a></li>
+      <li><a href="analytics.html" class="mobile-nav-link">📈 Analytics &amp; Insights</a></li>
+      <li><a href="sdg.html" class="mobile-nav-link">🌱 SDG Impact</a></li>
+      <li><a href="about.html" class="mobile-nav-link">ℹ️ About &amp; Architecture</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Container -->
+  <main class="container" style="padding-top: 24px; padding-bottom: 60px;">
+    
+    <!-- Page Header & Action Controls -->
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Expenses &amp; Budget Management</h1>
+        <p>Complete control over your personal cash flows, category spending caps, and data export.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-outline btn-sm" id="btnExportCsv">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export CSV
+        </button>
+        <button class="btn btn-outline btn-sm" id="btnPrintStatement">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Statement
+        </button>
+        <button class="btn btn-outline btn-sm" id="btnBackupJson">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          Backup JSON
+        </button>
+        <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;" title="Restore data from a JSON backup">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Import JSON
+          <input type="file" id="inputImportJson" accept=".json" style="display:none;">
+        </label>
+        <button class="btn btn-danger-outline btn-sm" id="btnClearAllExpenses">
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- Salary & Monthly Budget Setup Bar -->
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="grid grid-cols-2 gap-4" style="align-items: flex-end;">
+        <div>
+          <form id="salaryForm" style="display:flex; align-items:flex-end; gap:12px;">
+            <div style="flex:1;">
+              <label for="salaryInput" class="form-label" style="font-weight:600;">Monthly Salary / Inflow (₹)</label>
+              <input type="number" id="salaryInput" class="form-control num-tabular" placeholder="e.g. 75000" min="0" step="100" required>
             </div>
-            <div class="col-md-4">
-              <button class="btn btn-primary w-100 rounded-pill" id="setSalaryBtn">Set Salary</button>
-            </div>
-          </div>
-        </div>
-        <div class="row g-3 mb-4">
-          <div class="col-4">
-            <div class="summary-box bg-income">
-              <div class="label">Salary</div>
-              <div class="amount" id="displaySalary">₹0</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="summary-box bg-expense">
-              <div class="label">Total Expenses</div>
-              <div class="amount" id="displayExpenses">₹0</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="summary-box bg-balance">
-              <div class="label">Remaining</div>
-              <div class="amount" id="displayBalance">₹0</div>
-            </div>
-          </div>
-        </div>
-        <div class="white-card">
-          <h5>➕ Add New Expense</h5>
-          <form id="expenseForm">
-            <div class="row g-3">
-              <div class="col-md-3">
-                <label for="expDesc" class="form-label">Description</label>
-                <input type="text" class="form-control" id="expDesc" placeholder="e.g. Lunch" required>
-              </div>
-              <div class="col-md-2">
-                <label for="expAmount" class="form-label">Amount (₹)</label>
-                <input type="number" class="form-control" id="expAmount" placeholder="e.g. 250" min="1" required>
-              </div>
-              <div class="col-md-2">
-                <label for="expDate" class="form-label">Date</label>
-                <input type="date" class="form-control" id="expDate" required>
-              </div>
-              <div class="col-md-2">
-                <label for="expCategory" class="form-label">Category</label>
-                <select class="form-select" id="expCategory" required>
-                  <option value="">Select...</option>
-                  <option value="Food">🍔 Food</option>
-                  <option value="Shopping">🛍️ Shopping</option>
-                  <option value="Travelling">🚗 Travelling</option>
-                  <option value="Medical">🏥 Medical</option>
-                  <option value="Entertainment">🎬 Entertainment</option>
-                  <option value="Bills">📄 Bills</option>
-                  <option value="Education">📚 Education</option>
-                  <option value="Other">📦 Other</option>
-                </select>
-              </div>
-              <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-success w-100 rounded-pill">Add</button>
-              </div>
-            </div>
+            <button type="submit" class="btn btn-primary" style="height:42px;">Save Salary</button>
           </form>
         </div>
 
-        <!-- Expense List Table -->
-        <div class="white-card">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="mb-0">📋 Expense List</h5>
-            <button class="btn btn-outline-danger btn-sm rounded-pill px-3" id="clearAllBtn" style="display:none;">Clear All</button>
-          </div>
-
-          <div id="expenseTableWrap">
-            <!-- JS: Table will be rendered here -->
-            <div class="empty-msg" id="emptyState">
-              <p>🪹 No expenses added yet. Start by adding your first expense above!</p>
+        <div>
+          <form id="budgetForm" style="display:flex; align-items:flex-end; gap:12px;">
+            <div style="flex:1;">
+              <label for="monthlyBudgetInput" class="form-label" style="font-weight:600;">Overall Monthly Budget Cap (₹)</label>
+              <input type="number" id="monthlyBudgetInput" class="form-control num-tabular" placeholder="e.g. 45000" min="0" step="100" required>
             </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ====== RIGHT COLUMN ====== -->
-      <div class="col-lg-4">
-
-        <!-- Category-wise Percentage Chart -->
-        <div class="white-card">
-          <h5>📊 Spending by Category (%)</h5>
-          <canvas id="categoryChart" height="240"></canvas>
-          <p id="catChartEmpty" style="color:#999; font-size:0.85rem; text-align:center;">Add expenses to see chart</p>
-        </div>
-
-        <!-- Date-wise Spending Table -->
-        <div class="white-card">
-          <h5>📅 Spending by Date</h5>
-          <div id="dateWiseSpending" style="max-height: 300px; overflow-y: auto;">
-            <p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ====== REPORT SECTION ====== -->
-    <div class="row mt-4">
-      <div class="col-12">
-        <div class="white-card">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="mb-0">📝 Spending Report</h5>
-            <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-outline-primary rounded-pill px-3" id="downloadPdfBtn" style="display:none;"><i class="bi bi-file-pdf"></i> 📄 PDF</button>
-              <button type="button" class="btn btn-outline-success rounded-pill px-3" id="downloadCsvBtn" style="display:none;"><i class="bi bi-file-earmark-spreadsheet"></i> 📊 CSV</button>
-            </div>
-          </div>
-          <div id="reportSection">
-            <p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to generate your spending report</p>
-          </div>
+            <button type="submit" class="btn btn-secondary" style="height:42px;">Set Budget</button>
+            <button type="button" class="btn btn-outline" id="btnOpenCategoryBudgets" style="height:42px;">Category Budgets</button>
+          </form>
         </div>
       </div>
     </div>
 
+    <!-- Overview Financial Balance Stats -->
+    <section class="grid grid-cols-3 gap-4" style="margin-bottom: 28px;">
+      <div class="card stat-card" style="--stat-accent: var(--color-income); --stat-bg: var(--color-income-bg);">
+        <div class="stat-top">
+          <span class="stat-label">Salary Inflow</span>
+          <div class="stat-icon">₹</div>
+        </div>
+        <div class="stat-value num-tabular" id="dispSalary">₹0</div>
+        <div class="stat-meta">Configured baseline monthly income</div>
+      </div>
+
+      <div class="card stat-card" style="--stat-accent: var(--color-expense); --stat-bg: var(--color-expense-bg);">
+        <div class="stat-top">
+          <span class="stat-label">Total Outflow</span>
+          <div class="stat-icon">💸</div>
+        </div>
+        <div class="stat-value num-tabular" id="dispTotalSpent">₹0</div>
+        <div class="stat-meta" id="dispTxnMeta">0 transactions</div>
+      </div>
+
+      <div class="card stat-card" style="--stat-accent: var(--color-accent-blue); --stat-bg: var(--color-accent-blue-light);">
+        <div class="stat-top">
+          <span class="stat-label">Net Remaining Balance</span>
+          <div class="stat-icon">🏦</div>
+        </div>
+        <div class="stat-value num-tabular" id="dispBalance">₹0</div>
+        <div class="stat-meta" id="dispBudgetMeta">
+          Budget utilization: <strong id="dispBudgetPercent">0%</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Expense Recording Form Card -->
+    <div class="card" style="margin-bottom: 28px;" id="expenseFormCard">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title" id="formHeaderTitle">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            Record New Transaction
+          </h3>
+          <div class="card-subtitle">Log daily expenses with complete categorization and notes</div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnCancelEdit" style="display:none;">Cancel Edit</button>
+      </div>
+
+      <form id="mainExpenseForm">
+        <input type="hidden" id="editExpenseId" value="">
+        <div class="grid grid-cols-4 gap-3">
+          
+          <div class="form-group" style="grid-column: span 2;">
+            <label for="expTitle" class="form-label">Expense Description / Merchant *</label>
+            <input type="text" id="expTitle" class="form-control" placeholder="e.g. Groceries at Nature Basket, Petrol refill" required>
+          </div>
+
+          <div class="form-group">
+            <label for="expAmount" class="form-label">Amount (₹) *</label>
+            <input type="number" id="expAmount" class="form-control num-tabular" placeholder="0.00" min="0.01" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label for="expDate" class="form-label">Date *</label>
+            <input type="date" id="expDate" class="form-control" required>
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-3 gap-3" style="margin-top: 4px;">
+          
+          <div class="form-group">
+            <label for="expCategory" class="form-label">Category *</label>
+            <select id="expCategory" class="form-select" required>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="expPaymentMethod" class="form-label">Payment Method</label>
+            <select id="expPaymentMethod" class="form-select">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="expNotes" class="form-label">Optional Notes / Tag</label>
+            <input type="text" id="expNotes" class="form-control" placeholder="e.g. Reimbursement pending, Bill #302">
+          </div>
+
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
+          <button type="reset" class="btn btn-secondary" id="btnResetForm">Clear Inputs</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitExpense">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span id="btnSubmitExpenseText">Add Expense</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filter, Search, Sort & Ledger Table Section -->
+    <div class="card">
+      
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <!-- Search Input -->
+        <div class="input-with-icon" style="flex: 1; min-width: 240px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="searchQuery" class="form-control" placeholder="Search description, merchant, or notes...">
+        </div>
+
+        <!-- Category Filter -->
+        <div style="min-width: 160px;">
+          <select id="filterCategory" class="form-select">
+            <option value="ALL">All Categories</option>
+          </select>
+        </div>
+
+        <!-- Payment Method Filter -->
+        <div style="min-width: 160px;">
+          <select id="filterPayment" class="form-select">
+            <option value="ALL">All Payment Methods</option>
+          </select>
+        </div>
+
+        <!-- Date Range Filter -->
+        <div style="min-width: 150px;">
+          <select id="filterPeriod" class="form-select">
+            <option value="all">All Dates</option>
+            <option value="this_month" selected>This Month</option>
+            <option value="last_month">Last Month</option>
+            <option value="last_30_days">Last 30 Days</option>
+            <option value="this_year">This Year</option>
+          </select>
+        </div>
+
+        <!-- Sort Option -->
+        <div style="min-width: 170px;">
+          <select id="sortOption" class="form-select">
+            <option value="date_desc">Date: Newest First</option>
+            <option value="date_asc">Date: Oldest First</option>
+            <option value="amount_desc">Amount: High to Low</option>
+            <option value="amount_asc">Amount: Low to High</option>
+            <option value="title_asc">Title: A &rarr; Z</option>
+          </select>
+        </div>
+
+        <!-- Reset Filters -->
+        <button class="btn btn-ghost btn-sm" id="btnResetFilters" title="Reset all filters">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          Reset
+        </button>
+      </div>
+
+      <!-- Ledger Table -->
+      <div class="table-wrapper">
+        <table class="data-table" id="expensesTable">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Payment Method</th>
+              <th style="text-align: right;">Amount</th>
+              <th style="text-align: center; width: 120px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="expenseTableBody">
+            <!-- Populated dynamically by expenseManager.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State Container -->
+      <div id="tableEmptyState" style="display:none;"></div>
+
+      <!-- Pagination Footer -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; flex-wrap:wrap; gap:12px;">
+        <div style="font-size:0.875rem; color:var(--text-secondary);" id="paginationInfo">
+          Showing 0 of 0 transactions
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn btn-outline btn-sm" id="btnPrevPage" disabled>&larr; Previous</button>
+          <span id="pageIndicator" style="font-size:0.875rem; font-weight:600; padding:0 8px;">Page 1</span>
+          <button class="btn btn-outline btn-sm" id="btnNextPage" disabled>Next &rarr;</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Category Budgets Modal -->
+  <div class="modal-backdrop" id="categoryBudgetsModal">
+    <div class="modal" role="dialog" aria-labelledby="catBudgetModalTitle">
+      <div class="modal-header">
+        <h3 class="modal-title" id="catBudgetModalTitle">Category Spending Budgets</h3>
+        <button class="modal-close" id="closeCatBudgetsModal" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:16px;">
+          Set individual monthly expenditure limits per category to receive automated warnings when spending reaches threshold limits.
+        </p>
+        <div id="categoryBudgetsList" style="display:flex; flex-direction:column; gap:14px;">
+          <!-- Injected by expenseManager.js -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnSaveCategoryBudgets">Save Category Budgets</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer text-center">
-    &copy; 2026 Smart Expense Tracker & Currency Converter. All rights reserved.
+  <!-- Mobile Bottom Sticky Navigation -->
+  <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
+    <div class="bottom-bar-items">
+      <a href="index.html" class="bottom-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><span>Home</span></a>
+      <a href="expense.html" class="bottom-tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><span>Expenses</span></a>
+      <button class="bottom-tab btn-trigger-quick-add" style="background:none; border:none; cursor:pointer;" aria-label="Quick Add">
+        <div style="background:var(--color-primary); color:#fff; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; margin-top:-6px;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </div>
+        <span>Add</span>
+      </button>
+      <a href="currency.html" class="bottom-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path></svg><span>Converter</span></a>
+      <a href="analytics.html" class="bottom-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Insights</span></a>
+    </div>
+  </nav>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 SpendWise &bull; Expense Management Suite</div>
+        <div>All calculations processed using decimal precision logic.</div>
+      </div>
+    </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    // ======================== CONSTANTS & VARS ========================
-    const DOM = {
-      salary: document.getElementById('salaryInput'),
-      setSalaryBtn: document.getElementById('setSalaryBtn'),
-      expForm: document.getElementById('expenseForm'),
-      expDesc: document.getElementById('expDesc'),
-      expAmount: document.getElementById('expAmount'),
-      expDate: document.getElementById('expDate'),
-      expCat: document.getElementById('expCategory'),
-      displaySalary: document.getElementById('displaySalary'),
-      displayExpenses: document.getElementById('displayExpenses'),
-      displayBalance: document.getElementById('displayBalance'),
-      expenseTableWrap: document.getElementById('expenseTableWrap'),
-      downloadPdfBtn: document.getElementById('downloadPdfBtn'),
-      downloadCsvBtn: document.getElementById('downloadCsvBtn'),
-      clearAllBtn: document.getElementById('clearAllBtn'),
-      reportSection: document.getElementById('reportSection'),
-      categoryChart: document.getElementById('categoryChart'),
-      dateWiseSpending: document.getElementById('dateWiseSpending')
-    };
-
-    const COLORS = {
-      Food: '#e65100', Shopping: '#7b1fa2', Travelling: '#1565c0', Medical: '#2e7d32',
-      Entertainment: '#c62828', Bills: '#f57f17', Education: '#00695c', Other: '#546e7a'
-    };
-
-    let salary = 0, expenses = [], catChartObj = null;
-
-    // ======================== UTILITY FUNCTIONS ========================
-    const getTotalExpenses = () => expenses.reduce((sum, e) => sum + e.amount, 0);
-    const formatCurrency = (val) => '₹' + val.toLocaleString();
-    const saveData = () => {
-      localStorage.setItem('salary', JSON.stringify(salary));
-      localStorage.setItem('expenses', JSON.stringify(expenses));
-    };
-    const loadData = () => {
-      if (localStorage.getItem('salary')) salary = JSON.parse(localStorage.getItem('salary'));
-      if (localStorage.getItem('expenses')) expenses = JSON.parse(localStorage.getItem('expenses'));
-    };
-
-    // ======================== DISPLAY FUNCTIONS ========================
-    function updateSummary() {
-      const totalExp = getTotalExpenses();
-      const remaining = salary - totalExp;
-      DOM.displaySalary.textContent = formatCurrency(salary);
-      DOM.displayExpenses.textContent = formatCurrency(totalExp);
-      DOM.displayBalance.textContent = formatCurrency(remaining);
-      DOM.displayBalance.style.color = remaining < 0 ? '#c62828' : '#1565c0';
-    }
-
-    function renderExpenses() {
-      if (expenses.length === 0) {
-        DOM.expenseTableWrap.innerHTML = '<div class="empty-msg"><p>🪹 No expenses yet</p></div>';
-        DOM.clearAllBtn.style.display = 'none';
-        return;
-      }
-
-      DOM.clearAllBtn.style.display = 'inline-block';
-      let html = '<table class="expense-table"><thead><tr><th>#</th><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th>Action</th></tr></thead><tbody>';
-      
-      expenses.forEach((exp, i) => {
-        const color = COLORS[exp.category] || '#546e7a';
-        html += `<tr><td>${i + 1}</td><td>${exp.date || 'N/A'}</td><td>${exp.description}</td>
-                 <td><span class="badge-category" style="background:${color}15; color:${color};">${exp.category}</span></td>
-                 <td style="font-weight:600; color:#c62828;">${formatCurrency(exp.amount)}</td>
-                 <td><button class="btn-delete" onclick="deleteExpense(${i})">✕ Remove</button></td></tr>`;
-      });
-      
-      DOM.expenseTableWrap.innerHTML = html + '</tbody></table>';
-    }
-
-    function renderDateWiseSpending() {
-      if (expenses.length === 0) {
-        DOM.dateWiseSpending.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to see date breakdown</p>';
-        return;
-      }
-
-      const dateMap = expenses.reduce((acc, exp) => {
-        const date = exp.date || 'Unknown';
-        if (!acc[date]) acc[date] = [];
-        acc[date].push(exp);
-        return acc;
-      }, {});
-
-      let html = '<div>';
-      Object.keys(dateMap).sort().reverse().forEach(date => {
-        const dayExps = dateMap[date];
-        const dayTotal = dayExps.reduce((sum, e) => sum + e.amount, 0);
-        const dateStr = new Date(date + 'T00:00:00').toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-
-        html += `<div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0;">
-                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                 <strong style="color: #333;">${dateStr}</strong><span style="font-weight: 600; color: #c62828;">${formatCurrency(dayTotal)}</span></div><div style="margin-left: 8px;">`;
-
-        dayExps.forEach(exp => {
-          const color = COLORS[exp.category] || '#546e7a';
-          html += `<div style="font-size: 0.85rem; padding: 4px 0; display: flex; justify-content: space-between;">
-                   <span><span style="color: ${color}; font-weight: 500;">${exp.category}</span> - ${exp.description}</span>
-                   <span style="color: #999;">${formatCurrency(exp.amount)}</span></div>`;
-        });
-
-        html += '</div></div>';
-      });
-
-      DOM.dateWiseSpending.innerHTML = html + '</div>';
-    }
-
-    function renderCategoryChart() {
-      const canvas = document.getElementById('categoryChart');
-      const emptyMsg = document.getElementById('catChartEmpty');
-
-      if (expenses.length === 0) {
-        emptyMsg.style.display = 'block';
-        canvas.style.display = 'none';
-        if (catChartObj) catChartObj.destroy();
-        catChartObj = null;
-        return;
-      }
-
-      emptyMsg.style.display = 'none';
-      canvas.style.display = 'block';
-
-      const totals = expenses.reduce((acc, exp) => {
-        acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
-        return acc;
-      }, {});
-
-      const labels = Object.keys(totals);
-      const data = Object.values(totals);
-      const totalExp = getTotalExpenses();
-
-      const labelsWithPercent = labels.map(label => {
-        const pct = ((totals[label] / totalExp) * 100).toFixed(1);
-        return `${label} (${pct}%)`;
-      });
-
-      const colors = labels.map(cat => COLORS[cat] || '#546e7a');
-
-      if (catChartObj) catChartObj.destroy();
-
-      catChartObj = new Chart(canvas, {
-        type: 'pie',
-        data: {
-          labels: labelsWithPercent,
-          datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 10 }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12, weight: '500' }, usePointStyle: true } },
-            tooltip: { callbacks: { label: (ctx) => `${formatCurrency(ctx.parsed)} (${((ctx.parsed / totalExp) * 100).toFixed(1)}%)` } }
-          }
-        }
-      });
-    }
-
-    function renderReport() {
-      if (expenses.length === 0) {
-        DOM.reportSection.innerHTML = '<p style="color:#999; font-size:0.9rem; text-align:center;">Add expenses to generate your spending report</p>';
-        return;
-      }
-
-      const totalExp = getTotalExpenses();
-      const remaining = salary - totalExp;
-      const avgExp = (totalExp / expenses.length).toFixed(0);
-
-      const catTotals = expenses.reduce((acc, exp) => {
-        acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
-        return acc;
-      }, {});
-
-      const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
-      const [highestCat, highestAmt] = sorted[0] || ['-', 0];
-
-      let html = `<div class="row g-3 mb-4">
-                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#f3e5f5;"><div class="label">Total Expenses</div>
-                  <div class="amount" style="color:#7b1fa2;">${formatCurrency(totalExp)}</div></div></div>
-                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#e3f2fd;"><div class="label">Remaining</div>
-                  <div class="amount" style="color:${remaining < 0 ? '#c62828' : '#1565c0'};">${formatCurrency(remaining)}</div></div></div>
-                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#fff3e0;"><div class="label">Avg/Expense</div>
-                  <div class="amount" style="color:#e65100;">${formatCurrency(avgExp)}</div></div></div>
-                  <div class="col-md-3 col-6"><div class="summary-box" style="background:#ffebee;"><div class="label">Highest</div>
-                  <div class="amount" style="color:#c62828; font-size:1.1rem;">${highestCat}</div><small style="color:#999;">${formatCurrency(highestAmt)}</small></div></div>
-                  </div>`;
-
-      DOM.reportSection.innerHTML = html;
-      DOM.downloadPdfBtn.style.display = 'inline-block';
-      DOM.downloadCsvBtn.style.display = 'inline-block';
-    }
-
-    // ======================== DOWNLOAD FUNCTIONS ========================
-    DOM.setSalaryBtn.addEventListener('click', () => {
-      const val = parseFloat(DOM.salary.value);
-      if (isNaN(val) || val <= 0) { alert('Enter valid salary'); return; }
-      salary = val;
-      saveData();
-      updateSummary();
-    });
-
-    DOM.expForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const desc = DOM.expDesc.value.trim();
-      const amt = parseFloat(DOM.expAmount.value);
-      const cat = DOM.expCat.value;
-      const date = DOM.expDate.value;
-
-      if (!desc || isNaN(amt) || amt <= 0 || !cat || !date) {
-        alert('Fill all fields');
-        return;
-      }
-
-      expenses.push({ description: desc, amount: amt, category: cat, date });
-      saveData();
-      updateSummary();
-      renderExpenses();
-      renderCategoryChart();
-      renderDateWiseSpending();
-      renderReport();
-      DOM.expForm.reset();
-      setDefaultDate();
-    });
-
-    window.deleteExpense = (index) => {
-      expenses = expenses.filter((_, i) => i !== index);
-      saveData();
-      updateSummary();
-      renderExpenses();
-      renderCategoryChart();
-      renderDateWiseSpending();
-      renderReport();
-    };
-
-    DOM.clearAllBtn.addEventListener('click', () => {
-      if (confirm('Delete all expenses?')) {
-        expenses = [];
-        saveData();
-        updateSummary();
-        renderExpenses();
-      }
-    });
-
-    // ======================== DOWNLOAD FUNCTIONS ========================
-    function downloadAsCSV() {
-      if (expenses.length === 0) { alert('No expenses'); return; }
-
-      const headers = ['Date', 'Description', 'Category', 'Amount'];
-      const rows = expenses.map(e => [e.date || 'N/A', e.description, e.category, e.amount]);
-      rows.push([], ['', 'Total Expenses', '', getTotalExpenses()], ['', 'Salary', '', salary], ['', 'Balance', '', salary - getTotalExpenses()]);
-
-      const csv = [headers.join(','), ...rows.map(r => r.map(c => String(c).includes(',') ? `"${String(c)}"` : c).join(','))].join('\n');
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `SpendWise_Report_${new Date().toISOString().split('T')[0]}.csv`;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function downloadAsPDF() {
-      if (expenses.length === 0) { alert('No expenses'); return; }
-
-      const totalExp = getTotalExpenses();
-      const remaining = salary - totalExp;
-      const date = new Date().toLocaleDateString('en-IN');
-
-      let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SpendWise Report</title>
-                  <style>body{font-family:Arial;margin:20px;color:#333;}h1{color:#1a56db;margin-bottom:10px;}
-                  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
-                  .summary-box{border:1px solid #ddd;padding:10px;border-radius:5px;text-align:center;}
-                  .summary-box h3{margin:0 0 5px;font-size:14px;color:#666;}.summary-box .value{font-size:18px;font-weight:bold;}
-                  table{width:100%;border-collapse:collapse;margin-top:20px;}th{background:#f8f9fa;padding:10px;text-align:left;border:1px solid #ddd;font-weight:bold;}
-                  td{padding:8px;border:1px solid #ddd;}tr:nth-child(even){background:#f9f9f9;}.footer{margin-top:20px;font-size:12px;color:#999;}
-                  </style></head><body><h1>💰 SpendWise - Expense Report</h1><p>Generated on: ${date}</p>
-                  <div class="summary"><div class="summary-box"><h3>Salary</h3><div class="value">${formatCurrency(salary)}</div></div>
-                  <div class="summary-box"><h3>Total Expenses</h3><div class="value" style="color: #c62828;">${formatCurrency(totalExp)}</div></div>
-                  <div class="summary-box"><h3>Remaining</h3><div class="value" style="color: ${remaining < 0 ? '#c62828' : '#2e7d32'};">${formatCurrency(remaining)}</div></div></div>
-                  <h3>Expense Breakdown</h3><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody>`;
-
-      expenses.forEach(exp => {
-        html += `<tr><td>${exp.date || 'N/A'}</td><td>${exp.description}</td><td>${exp.category}</td><td>${formatCurrency(exp.amount)}</td></tr>`;
-      });
-
-      html += `</tbody></table><div class="footer"><p>Generated by SpendWise - Smart Expense Tracker</p></div></body></html>`;
-      
-      const win = window.open();
-      win.document.write(html);
-      win.document.close();
-      win.print();
-    }
-
-    DOM.downloadCsvBtn.addEventListener('click', downloadAsCSV);
-    DOM.downloadPdfBtn.addEventListener('click', downloadAsPDF);
-
-    // ======================== INIT ========================
-    function setDefaultDate() {
-      const today = new Date().toISOString().split('T')[0];
-      DOM.expDate.value = today;
-      DOM.expDate.max = today;
-    }
-
-    setDefaultDate();
-    loadData();
-    DOM.salary.value = salary;
-    updateSummary();
-    renderExpenses();
-    renderCategoryChart();
-    renderDateWiseSpending();
-    renderReport();
-  </script>
+  <script type="module" src="js/expenseManager.js"></script>
 </body>
 </html>
